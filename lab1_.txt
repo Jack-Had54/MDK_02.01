@@ -80,3 +80,54 @@ bash: ды: команда не найдена
 lab2  test
 // перемещение файла между деректориями 
 
+Глава 9 
+После создания нового файла и деректории (команда touch and mkdir) я посмотрел их права с помощью ls -l. Я изменил права для деректории так, что нельзя было посмотреть что в ней находться, а после, так что бы было видно, но нельзя было именять содержимое этой деректории. Так же я проделал эти действия с файлом. 
+@Jack-Had54 ➜ /workspaces/MDK_02.01/32 (main) $ touch test 
+@Jack-Had54 ➜ /workspaces/MDK_02.01/32 (main) $ ls -l
+total 4
+-rw-rw-rw-  1 codespace codespace    0 Feb  6 06:05 1
+drwxrwxrwx+ 2 codespace codespace 4096 Feb  6 05:02 11
+-rw-rw-rw-  1 codespace codespace    0 Feb  6 06:16 test
+@Jack-Had54 ➜ /workspaces/MDK_02.01/32 (main) $ chmod 222 test
+@Jack-Had54 ➜ /workspaces/MDK_02.01/32 (main) $ ls -l
+total 4
+-rw-rw-rw-  1 codespace codespace    0 Feb  6 06:05 1
+drwxrwxrwx+ 2 codespace codespace 4096 Feb  6 05:02 11
+--w--w--w-  1 codespace codespace    0 Feb  6 06:16 test
+@Jack-Had54 ➜ /workspaces/MDK_02.01/32 (main) $ chmod 555 11
+@Jack-Had54 ➜ /workspaces/MDK_02.01/32 (main) $ ls -l
+total 4
+-rw-rw-rw-  1 codespace codespace    0 Feb  6 06:05 1
+dr-xr-xr-x+ 2 codespace codespace 4096 Feb  6 05:02 11
+--w--w--w-  1 codespace codespace    0 Feb  6 06:16 test
+@Jack-Had54 ➜ /workspaces/MDK_02.01/32 (main) $ cd 11
+@Jack-Had54 ➜ /workspaces/MDK_02.01/32/11 (main) $ ls
+@Jack-Had54 ➜ /workspaces/MDK_02.01/32/11 (main) $ touch 2
+touch: cannot touch '2': Permission denied
+@Jack-Had54 ➜ /workspaces/MDK_02.01/32/11 (main) $ 
+Графика хрень, КС тащит :)
+Для того что бы у меня по умолчанию были другие прва у новых файлов и деркторий, я использовал команду umask. С помощью этой команды я могу забрать или дать все права для новых файлов, будет полезно при нескольех пользователях или при работе в компании и настройки доступов.
+[311u18@311U18 git]$ ls -l
+итого 0
+-rw-r--r--. 1 311u18 пользователи домена 0 янв 30 11:55 git1
+[311u18@311U18 git]$ touch tet
+[311u18@311U18 git]$ umask
+0022
+[311u18@311U18 git]$ ls -s
+итого 0
+0 git1  0 tet
+[311u18@311U18 git]$ ls -l
+итого 0
+-rw-r--r--. 1 311u18 пользователи домена 0 янв 30 11:55 git1
+-rw-r--r--. 1 311u18 пользователи домена 0 фев  6 13:23 tet
+[311u18@311U18 git]$ umask 0666
+[311u18@311U18 git]$ umask 
+0666
+[311u18@311U18 git]$ touch ses
+[311u18@311U18 git]$ ls -l
+итого 0
+-rw-r--r--. 1 311u18 пользователи домена 0 янв 30 11:55 git1
+----------. 1 311u18 пользователи домена 0 фев  6 13:25 ses
+-rw-r--r--. 1 311u18 пользователи домена 0 фев  6 13:23 tet
+[311u18@311U18 git]$ 
+
