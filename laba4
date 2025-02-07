@@ -1,0 +1,159 @@
+Выполнение лабараторной работы 4, в виртуалке Ubuntu
+
+Я посмотрел права доступа и владельцем деректории при помощи команды getfacl
+
+u18@u18-VirtualBox:~$ getfacl snap
+# file: snap
+# owner: u18
+# group: u18
+user::rwx
+group::---
+other::---
+
+Потом создал новый файл, помен ему прова доступа через команду chmod и посмотрел
+
+u18@u18-VirtualBox:~$ touch 1
+u18@u18-VirtualBox:~$ getfacl 1
+# file: 1
+# owner: u18
+# group: u18
+user::rw-
+group::rw-
+other::r--
+
+u18@u18-VirtualBox:~$ chmod 060 1
+u18@u18-VirtualBox:~$ ls -l 1
+----rw---- 1 u18 u18 0 фев  7 13:25 1
+u18@u18-VirtualBox:~$ getfacl 1
+# file: 1
+# owner: u18
+# group: u18
+user::---
+group::rw-
+other::---
+
+Я сиздал еще одного пользователь и добавил его в качестве владельца к созданому файлу 
+
+u18@u18-VirtualBox:~$ ls -l 1
+----rw---- 1 u18 u18 0 фев  7 13:25 1
+u18@u18-VirtualBox:~$ getfacl 1
+# file: 1
+# owner: u18
+# group: u18
+user::---
+group::rw-
+other::---
+
+u18@u18-VirtualBox:~$ setfacl -m u:U1:rwx 1
+u18@u18-VirtualBox:~$ getfacl 1
+# file: 1
+# owner: u18
+# group: u18
+user::---
+user:U1:rwx
+group::rw-
+mask::rwx
+other::---
+
+Я помен прова доступа к деректории и создал там новый документ из под другого пользователя
+
+u18@u18-VirtualBox:/home$ chmod 777 u18
+u18@u18-VirtualBox:/home$ stat u18
+  Файл: u18
+  Размер: 4096          Блоков: 8          Блок В/В: 4096   каталог
+Устройство: 803h/2051d  Инода: 446354      Ссылки: 15
+Доступ: (0777/drwxrwxrwx)  Uid: ( 1000/     u18)   Gid: ( 1000/     u18)
+Доступ:        2025-02-07 13:58:27.753617239 +0700
+Модифицирован: 2025-02-07 13:57:38.648905491 +0700
+Изменён:       2025-02-07 14:00:06.008315451 +0700
+Создан:        2025-02-06 15:46:03.214646585 +0700
+u18@u18-VirtualBox:/home$ su U1
+Пароль:
+U1@u18-VirtualBox:/home$ cd u18
+U1@u18-VirtualBox:/home/u18$ ls
+ 1      Видео       Загрузки      Музыка         'Рабочий стол'
+ snap   Документы   Изображения   Общедоступные   Шаблоны
+U1@u18-VirtualBox:/home/u18$ touch 2
+U1@u18-VirtualBox:/home/u18$ stat 2
+  Файл: 2
+  Размер: 0             Блоков: 0          Блок В/В: 4096   пустой обычный файл
+Устройство: 803h/2051d  Инода: 457458      Ссылки: 1
+Доступ: (0664/-rw-rw-r--)  Uid: ( 1001/      U1)   Gid: ( 1001/      U1)
+Доступ:        2025-02-07 14:00:43.589237361 +0700
+Модифицирован: 2025-02-07 14:00:43.589237361 +0700
+Изменён:       2025-02-07 14:00:43.589237361 +0700
+Создан:        2025-02-07 14:00:43.589237361 +0700
+U1@u18-VirtualBox:/home/u18$ getfacl 2
+# file: 2
+# owner: U1
+# group: U1
+user::rw-
+group::rw-
+other::r--
+
+Создал новую группу без пользователя и затем создал новый файл под своим пользователем
+u18@u18-VirtualBox:~$ newgrp g1
+Пароль:
+u18@u18-VirtualBox:~$ tuoch 5
+Команда «tuoch» не найдена. Возможно, вы имели в виду:
+  команда 'touch' из deb-пакета coreutils (8.32-4.1ubuntu1.2)
+Попробуйте: sudo apt install <имя_deb-пакета>
+u18@u18-VirtualBox:~$ touch 5
+u18@u18-VirtualBox:~$ stat 5
+  Файл: 5
+  Размер: 0             Блоков: 0          Блок В/В: 4096   пустой обычный файл
+Устройство: 803h/2051d  Инода: 457458      Ссылки: 1
+Доступ: (0664/-rw-rw-r--)  Uid: ( 1000/     u18)   Gid: ( 1002/      g1)
+Доступ:        2025-02-07 14:23:11.510091221 +0700
+Модифицирован: 2025-02-07 14:23:11.510091221 +0700
+Изменён:       2025-02-07 14:23:11.510091221 +0700
+Создан:        2025-02-07 14:23:11.510091221 +0700
+
+Ограничиле доступ к файлу у одного пользователя, а потом вернули
+u18@u18-VirtualBox:~$ getfacl 3
+# file: 3
+# owner: u18
+# group: u18
+user::rw-
+group::rw-
+other::r--
+
+u18@u18-VirtualBox:~$ less 3
+u18@u18-VirtualBox:~$ setfcl -m u:U1:--- 3
+Команда «setfcl» не найдена. Возможно, вы имели в виду:
+  команда 'setfacl' из deb-пакета acl (2.3.1-1)
+Попробуйте: sudo apt install <имя_deb-пакета>
+u18@u18-VirtualBox:~$ setfacl -m u:U1:--- 3
+u18@u18-VirtualBox:~$ getfacl 3
+# file: 3
+# owner: u18
+# group: u18
+user::rw-
+user:U1:---
+group::rw-
+mask::rw-
+other::r--
+
+u18@u18-VirtualBox:~$ su U1
+Пароль:
+U1@u18-VirtualBox:/home/u18$ less 3
+3: Отказано в доступе
+U1@u18-VirtualBox:/home/u18$ exit
+exit
+u18@u18-VirtualBox:~$ setfacl -m u:U1:rw- 3
+u18@u18-VirtualBox:~$ getfacl 3
+# file: 3
+# owner: u18
+# group: u18
+user::rw-
+user:U1:rw-
+group::rw-
+mask::rw-
+other::r--
+
+u18@u18-VirtualBox:~$ su U1
+Пароль:
+U1@u18-VirtualBox:/home/u18$ less 3
+U1@u18-VirtualBox:/home/u18$
+
+
