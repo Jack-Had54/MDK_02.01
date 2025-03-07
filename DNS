@@ -1,0 +1,73 @@
+kolea@kolea:~$ dig vc.com
+
+; <<>> DiG 9.18.30-0ubuntu0.22.04.2-Ubuntu <<>> vc.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 23218
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;vc.com.				IN	A
+
+;; AUTHORITY SECTION:
+vc.com.			1800	IN	SOA	kelly.ns.cloudflare.com. dns.cloudflare.com. 2362107055 10000 2400 604800 1800
+
+;; Query time: 263 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53) (UDP)
+;; WHEN: Fri Mar 07 06:43:47 UTC 2025
+;; MSG SIZE  rcvd: 95
+
+kolea@kolea:~$ dig vc.com
+
+; <<>> DiG 9.18.30-0ubuntu0.22.04.2-Ubuntu <<>> vc.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 45002
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;vc.com.				IN	A
+
+;; AUTHORITY SECTION:
+vc.com.			1792	IN	SOA	kelly.ns.cloudflare.com. dns.cloudflare.com. 2362107055 10000 2400 604800 1800
+
+;; Query time: 3 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53) (UDP)
+;; WHEN: Fri Mar 07 06:43:55 UTC 2025
+;; MSG SIZE  rcvd: 95
+
+
+acl dnsclients{
+        192.168.1.0/24;
+        localhost;
+        localnets;
+};
+options {
+        directory "/var/cache/bind";
+
+        // If there is a firewall between you and nameservers you want
+        // to talk to, you may need to fix the firewall to allow multiple
+        // ports to talk.  See http://www.kb.cert.org/vuls/id/800113
+
+        // If your ISP provided one or more IP addresses for stable
+        // nameservers, you probably want to use them as forwarders.
+        // Uncomment the following block, and insert the addresses replacing
+        // the all-0's placeholder.
+
+        // forwarders {
+        //      0.0.0.0;
+        // };
+
+        //========================================================================
+        // If BIND logs error messages about the root key being expired,
+        // you will need to update your keys.  See https://www.isc.org/bind-keys
+        //========================================================================
+        dnssec-validation auto;
+        allow-query {dnsclients;};
+        listen-on { any; };
+        listen-on-v6 { none; };
+};
