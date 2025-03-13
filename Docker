@@ -1,0 +1,158 @@
+отчет по работе с docker 
+u18@u18-VirtualBox:~$ docker images
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+
+Посиск необходимого образа 
+
+u18@u18-VirtualBox:~$ docker search ubuntu
+NAME                             DESCRIPTION                                     STARS     OFFICIAL
+ubuntu                           Ubuntu is a Debian-based Linux operating sys…   17496     [OK]
+ubuntu/squid                     Squid is a caching proxy for the Web. Long-t…   107       
+ubuntu/nginx                     Nginx, a high-performance reverse proxy & we…   127       
+ubuntu/cortex                    Cortex provides storage for Prometheus. Long…   4         
+
+u18@u18-VirtualBox:~$ docker search alt
+NAME                          DESCRIPTION                        STARS     OFFICIAL
+alt                           The official build of ALT Linux.   67        [OK]
+i386/alt                      The official build of ALT Linux.   0         
+ppc64le/alt                   The official build of ALT Linux.   0         
+
+u18@u18-VirtualBox:~$ docker search adminer
+NAME                         DESCRIPTION                                     STARS     OFFICIAL
+adminer                      Database management in a single PHP file.       941       [OK]
+dockette/adminer             My most tiniest (10mb) Adminer image with su…   27        
+vulhub/adminer                                                               0         
+dehy/adminer                 Very light (19MB) adminer with full capabili…   17        
+
+u18@u18-VirtualBox:~$ docker search drupal
+NAME                       DESCRIPTION                                     STARS     OFFICIAL
+drupal                     Drupal is an open source content management …   1064      [OK]
+bitnami/drupal             Bitnami container image for Drupal              33        
+bitnamicharts/drupal       Bitnami Helm chart for Drupal                   0         
+islandora/drupal           Drupal base image.                              0         
+
+Установка образа 
+
+u18@u18-VirtualBox:~$ docker pull ubuntu:22.04
+22.04: Pulling from library/ubuntu
+9cb31e2e37ea: Pull complete 
+Digest: sha256:ed1544e454989078f5dec1bfdabd8c5cc9c48e0705d07b678ab6ae3fb61952d2
+Status: Downloaded newer image for ubuntu:22.04
+docker.io/library/ubuntu:22.04
+
+u18@u18-VirtualBox:~$ docker pull alt
+Using default tag: latest
+latest: Pulling from library/alt
+50159fc3f76b: Pull complete 
+305aa293179e: Pull complete 
+Digest: sha256:038031df9afd7e2763c01015933957bd0565666f598b0611c0fa51c6a1797594
+Status: Downloaded newer image for alt:latest
+docker.io/library/alt:latest
+
+u18@u18-VirtualBox:~$ docker pull adminer
+Using default tag: latest
+latest: Pulling from library/adminer
+f18232174bc9: Pull complete 
+e2042ef04ad5: Pull complete 
+85d7cd47c118: Pull complete 
+2e9c25e1ad37: Pull complete 
+87b517bf08d7: Pull complete 
+9d84bce3fd32: Pull complete 
+6d87dc865831: Pull complete 
+db547d87d893: Pull complete 
+13dead29bff0: Pull complete 
+96ca490c76cb: Pull complete 
+f6f3da5eea25: Pull complete 
+4f4fb700ef54: Pull complete 
+9352cfe383da: Pull complete 
+9e39aa3f0acf: Pull complete 
+c25bec8dbf14: Pull complete 
+29151e00625e: Pull complete 
+Digest: sha256:f01629adf5f21450d467e209f4daa921c443c002479aa49a68525fe2679c45e4
+Status: Downloaded newer image for adminer:latest
+docker.io/library/adminer:latest
+
+u18@u18-VirtualBox:~$ docker pull drupal
+Using default tag: latest
+latest: Pulling from library/drupal
+7cf63256a31a: Pull complete 
+02aa0bfe816b: Pull complete 
+8929067778be: Pull complete 
+063974348ccd: Pull complete 
+f26f1ad6e54d: Pull complete 
+a97035320663: Pull complete 
+55a6d997f013: Pull complete 
+be1b093a2245: Pull complete 
+3acaaa0d0c5b: Pull complete 
+0e837c2fac70: Pull complete 
+aecd72a519c7: Pull complete 
+7f47c5f800b7: Pull complete 
+1db31e85631a: Pull complete 
+4f4fb700ef54: Pull complete 
+eb95d85d9c13: Pull complete 
+256021636159: Pull complete 
+b2f19bee0bed: Pull complete 
+7dc199cf18af: Pull complete 
+2548765124dd: Pull complete 
+Digest: sha256:417681429bbcf4aabf2f3a56259edcead03417dc510442c11f7bafe30007f551
+Status: Downloaded newer image for drupal:latest
+docker.io/library/drupal:latest
+
+Просмотер всех установленых образов 
+
+u18@u18-VirtualBox:~$ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
+adminer      latest    b2589814f453   7 hours ago    121MB
+drupal       latest    ff5ba7933d2b   7 days ago     601MB
+ubuntu       22.04     a24be041d957   6 weeks ago    77.9MB
+alt          latest    f407182509fe   2 months ago   132MB
+
+Удооление образов 
+
+u18@u18-VirtualBox:~$ docker rmi -f ff5ba7933d2b f407182509fe
+Untagged: drupal:latest
+Untagged: drupal@sha256:417681429bbcf4aabf2f3a56259edcead03417dc510442c11f7bafe30007f551
+Deleted: sha256:ff5ba7933d2b7fc373234f628514edc3c7036ec08c5d8f4bdfad6375e898afcc
+Deleted: sha256:99539864d1187cfcffc9bafd563274787f699ad3aad082b6779724461859a50d
+Deleted: sha256:f47072e7dc29b6c220a5adc5a8ed382269cfb6a12bcf09b6341376ddaecdf0ee
+Deleted: sha256:568f29b0615a1cd3efc3ddd90511f23a6bfbe156e0669dce4336ab8fe59a0419
+Deleted: sha256:ab5d2a2a432eb526e6d87e72aa22c006fb243b9a6c983d697621f75694eb3b8d
+Deleted: sha256:fc149c0fdeb4a17b15a16d70d93bb2f6f1107a2f47cf8c043a8aa5e41ca27863
+Deleted: sha256:754c5d9d3e3c44480b82f7f9e9f89c4d4fd7b6e39a35b5a6cbb42f649442ab5c
+Deleted: sha256:d22a84a35b34323622747125899b47fb7c9d498a3a601e3894943cf35ea203d8
+Deleted: sha256:8c63f891f5654244bda00fffcd510ef0d4ffbb43037961ae17f983e81e0d2d7c
+Deleted: sha256:29267db198ba8b5519e180e6d9d354f262326b2af3fda1b4dae3bedb066c9129
+Deleted: sha256:9fc96af09a21576ce81cb1d263a7cdbb1a10679f393c08b4502af874f6a1e6ba
+Deleted: sha256:bf670afab7c33d0c12af03d939cf67b84118b960829fcec45ecc26f577609ae1
+Deleted: sha256:0c168386bbe054d5136e303e38e60b8760ea21ff819124eefaaed4049db13435
+Deleted: sha256:6e0e75645d5d1076039644fa6bb6d3b41e0d60fdd3b54e52f356e51d708b0e02
+Deleted: sha256:0aec686382ce61342f9fafdf22b56fd19224c60be8eea2c209b31b7fd2a982e4
+Deleted: sha256:9d813d6c82b7ac8a3b931834888331cc951b9b6525c3220594cc1c1dca266815
+Deleted: sha256:410a5bfdb46b28a75ec3be3e4dbb126619f183a991de62d7016e06fe44bbdb67
+Deleted: sha256:ada2a6b716f9f1b071a170045d25e5f694dfe2b8664b0cca1db1526db3024ee7
+Deleted: sha256:72ffa78ae333197ca0cfa283e84bf8ffa3f78d2cc41af9678b19c049e74faad3
+Deleted: sha256:5f1ee22ffb5e68686db3dcb6584eb1c73b5570615b0f14fabb070b96117e351d
+Untagged: alt:latest
+Untagged: alt@sha256:038031df9afd7e2763c01015933957bd0565666f598b0611c0fa51c6a1797594
+Deleted: sha256:f407182509fea72dd4f82b597674b168f692fc7dcd8cdec94af340c928f37239
+Deleted: sha256:3c691722e0e6fce13e547d4a893deb35281dc5986ffa1c6f0812983a8d69b901
+Deleted: sha256:ef2aa97478877e25eea6a7317d0814333bf7988bbd68662515e21c3734ca97ec
+u18@u18-VirtualBox:~$ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+adminer      latest    b2589814f453   8 hours ago   121MB
+ubuntu       22.04     a24be041d957   6 weeks ago   77.9MB
+
+Запуск образа в интерактивном режиме 
+
+u18@u18-VirtualBox:~$ docker run -it a24be041d957
+root@2b0e34b4c5ba:/# pwd
+/
+root@2b0e34b4c5ba:/# name -a
+bash: name: command not found
+root@2b0e34b4c5ba:/# uname -a
+Linux 2b0e34b4c5ba 6.8.0-52-generic #53~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Wed Jan 15 19:18:46 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+root@2b0e34b4c5ba:/# 
+
+u18@u18-VirtualBox:~$ docker ps -a
+CONTAINER ID   IMAGE          COMMAND       CREATED          STATUS                        PORTS     NAMES
+2b0e34b4c5ba   a24be041d957   "/bin/bash"   22 minutes ago   Exited (127) 36 seconds ago             elegant_merkle
