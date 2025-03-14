@@ -1,0 +1,266 @@
+Работа с контейнерами БД 
+
+Запуск контейнера из образа 
+
+u18@u18-VirtualBox:~$ docker search mysql
+NAME                   DESCRIPTION                                     STARS     OFFICIAL
+mysql                  MySQL is a widely used, open-source relation…   15699     [OK]
+bitnami/mysql          Bitnami container image for MySQL               132       
+
+u18@u18-VirtualBox:~$ docker pull mysql
+Using default tag: latest
+latest: Pulling from library/mysql
+804bb8ae89de: Pull complete 
+1b515e7ceb69: Pull complete 
+eaa11c0a9f08: Pull complete 
+8d18181893b8: Pull complete 
+e0a910cc8604: Pull complete 
+bc0c792ca096: Pull complete 
+8d73d2a73425: Pull complete 
+4a7e00d873b9: Pull complete 
+27a2553d6a80: Pull complete 
+69e76254f502: Pull complete 
+Digest: sha256:9b9d0aab4860798acff13d2a0ece3bc26639fe18b83fa5cd3e3d0e16b3ed05dd
+Status: Downloaded newer image for mysql:latest
+docker.io/library/mysql:latest
+u18@u18-VirtualBox:~$ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED        SIZE
+adminer      latest    b2589814f453   31 hours ago   121MB
+ubuntu       latest    a04dc4851cbc   6 weeks ago    78.1MB
+ubuntu       22.04     a24be041d957   6 weeks ago    77.9MB
+mysql        latest    fa262c3a6564   7 weeks ago    797MB
+u18@u18-VirtualBox:~$ docker run -d fa262c3a6564
+0dbfd12a8a7ca5aa45109ad38249b467aa3aa697cd4cf77ff2c673f672c0eb66
+u18@u18-VirtualBox:~$ 
+
+u18@u18-VirtualBox:~$ docker run -d fa262c3a6564
+0dbfd12a8a7ca5aa45109ad38249b467aa3aa697cd4cf77ff2c673f672c0eb66
+u18@u18-VirtualBox:~$ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+u18@u18-VirtualBox:~$ docker ps -a
+CONTAINER ID   IMAGE          COMMAND                  CREATED         STATUS                          PORTS     NAMES
+0dbfd12a8a7c   fa262c3a6564   "docker-entrypoint.s…"   2 minutes ago   Exited (1) About a minute ago             busy_kapitsa
+78d9146bb8dd   ubuntu         "/bin/bash"              22 hours ago    Exited (129) 22 hours ago                 intelligent_chatterjee
+cedd2077d46c   ubuntu         "/bin/bash"              23 hours ago    Exited (0) 23 hours ago                   wonderful_bhaskara
+2b0e34b4c5ba   a24be041d957   "/bin/bash"              24 hours ago    Exited (255) 11 minutes ago               elegant_merkle
+u18@u18-VirtualBox:~$ docker logs 0dbfd12a8a7c
+2025-03-14 05:37:18+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 9.2.0-1.el9 started.
+2025-03-14 05:37:21+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2025-03-14 05:37:21+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 9.2.0-1.el9 started.
+2025-03-14 05:37:21+00:00 [ERROR] [Entrypoint]: Database is uninitialized and password option is not specified
+    You need to specify one of the following as an environment variable:
+    - MYSQL_ROOT_PASSWORD
+    - MYSQL_ALLOW_EMPTY_PASSWORD
+    - MYSQL_RANDOM_ROOT_PASSWORD
+u18@u18-VirtualBox:~$ docker -e MYSQL_ROOT_PASSWORD=123123 -d fa262c3a6564
+unknown shorthand flag: 'e' in -e
+
+Usage:  docker [OPTIONS] COMMAND [ARG...]
+
+Run 'docker --help' for more information
+u18@u18-VirtualBox:~$ docker run -e MYSQL_ROOT_PASSWORD=123123 -d fa262c3a6564
+034ae85e6a02a260efe821154211bedc387a1384145da8ca3299b893f49755ae
+u18@u18-VirtualBox:~$ docker ps 
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS         PORTS                 NAMES
+034ae85e6a02   fa262c3a6564   "docker-entrypoint.s…"   12 seconds ago   Up 8 seconds   3306/tcp, 33060/tcp   hopeful_lamarr
+u18@u18-VirtualBox:~$ docker logs 034ae85e6a02
+2025-03-14 05:43:02+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 9.2.0-1.el9 started.
+2025-03-14 05:43:03+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2025-03-14 05:43:03+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 9.2.0-1.el9 started.
+2025-03-14 05:43:04+00:00 [Note] [Entrypoint]: Initializing database files
+2025-03-14T05:43:04.034652Z 0 [System] [MY-015017] [Server] MySQL Server Initialization - start.
+2025-03-14T05:43:04.040717Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 9.2.0) initializing of server in progress as process 80
+2025-03-14T05:43:04.345271Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2025-03-14T05:43:21.320900Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+u18@u18-VirtualBox:~$ 
+
+u18@u18-VirtualBox:~$ docker exec 034ae85e6a02 ls -l /etc/passwd
+-rw-r--r-- 1 root root 575 Mar 13 17:51 /etc/passwd
+u18@u18-VirtualBox:~$ docker exec 034ae85e6a02 cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:65534:65534:Kernel Overflow User:/:/sbin/nologin
+mysql:x:999:999::/var/lib/mysql:/bin/bash
+u18@u18-VirtualBox:~$ 
+
+u18@u18-VirtualBox:~$ docker exec 034ae85e6a02 cat /etc/*-release
+cat: /etc/lsb-release: No such file or directory
+NAME="Oracle Linux Server"
+VERSION="9.5"
+ID="ol"
+ID_LIKE="fedora"
+VARIANT="Server"
+VARIANT_ID="server"
+VERSION_ID="9.5"
+PLATFORM_ID="platform:el9"
+PRETTY_NAME="Oracle Linux Server 9.5"
+ANSI_COLOR="0;31"
+CPE_NAME="cpe:/o:oracle:linux:9:5:server"
+HOME_URL="https://linux.oracle.com/"
+BUG_REPORT_URL="https://github.com/oracle/oracle-linux"
+
+ORACLE_BUGZILLA_PRODUCT="Oracle Linux 9"
+ORACLE_BUGZILLA_PRODUCT_VERSION=9.5
+ORACLE_SUPPORT_PRODUCT="Oracle Linux"
+ORACLE_SUPPORT_PRODUCT_VERSION=9.5
+u18@u18-VirtualBox:~$ 
+
+u18@u18-VirtualBox:~$ docker exec -it 034ae85e6a02 mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 9.2.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases
+    -> 
+    -> 
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.05 sec)
+
+mysql> 
+
+mysql> use mysql 
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables
+    -> ;
++------------------------------------------------------+
+| Tables_in_mysql                                      |
++------------------------------------------------------+
+| columns_priv                                         |
+| component                                            |
+| db                                                   |
+| default_roles                                        |
+| engine_cost                                          |
+| func                                                 |
+| general_log                                          |
+| global_grants                                        |
+| gtid_executed                                        |
+| help_category                                        |
+| help_keyword                                         |
+| help_relation                                        |
+| help_topic                                           |
+| innodb_index_stats                                   |
+| innodb_table_stats                                   |
+| ndb_binlog_index                                     |
+| password_history                                     |
+| plugin                                               |
+| procs_priv                                           |
+| proxies_priv                                         |
+| replication_asynchronous_connection_failover         |
+| replication_asynchronous_connection_failover_managed |
+| replication_group_configuration_version              |
+| replication_group_member_actions                     |
+| role_edges                                           |
+| server_cost                                          |
+| servers                                              |
+| slave_master_info                                    |
+| slave_relay_log_info                                 |
+| slave_worker_info                                    |
+| slow_log                                             |
+| tables_priv                                          |
+| time_zone                                            |
+| time_zone_leap_second                                |
+| time_zone_name                                       |
+| time_zone_transition                                 |
+| time_zone_transition_type                            |
+| user                                                 |
++------------------------------------------------------+
+38 rows in set (0.01 sec)
+
+mysql> 
+
+mysql> select Host,User,User_attributes from user;
++-----------+------------------+-----------------+
+| Host      | User             | User_attributes |
++-----------+------------------+-----------------+
+| %         | root             | NULL            |
+| localhost | mysql.infoschema | NULL            |
+| localhost | mysql.session    | NULL            |
+| localhost | mysql.sys        | NULL            |
+| localhost | root             | NULL            |
++-----------+------------------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> 
+
+mysql> create database Kolesnikov;
+Query OK, 1 row affected (1.29 sec)
+
+mysql> create user 'andrey'@'%' identified by '147'
+    -> ;
+Query OK, 0 rows affected (0.47 sec)
+
+mysql> grant all privileges on Kolesnikov.* to 'andrey'@'%';
+Query OK, 0 rows affected (0.24 sec)
+
+mysql> flush privilege
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'privilege' at line 1
+mysql> flush privileges;
+Query OK, 0 rows affected, 1 warning (0.19 sec)
+
+mysql> create table T1 (  id int not null, name varchar(20) not null, class int not null, primary key (id) );
+Query OK, 0 rows affected (1.43 sec)
+
+mysql> insert into T1 (id, name, class) values (1, 'kolesnikov', 411);
+Query OK, 1 row affected (0.20 sec)
+
+mysql> show columns from T1;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | NO   | PRI | NULL    |       |
+| name  | varchar(20) | NO   |     | NULL    |       |
+| class | int         | NO   |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from T1;
++----+------------+-------+
+| id | name       | class |
++----+------------+-------+
+|  1 | kolesnikov |   411 |
++----+------------+-------+
+1 row in set (0.02 sec)
+
+mysql> insert into T1 (id,name,class) values (2,'medvedeva',411);
+Query OK, 1 row affected (0.29 sec)
+
+mysql> select * from T1;
++----+------------+-------+
+| id | name       | class |
++----+------------+-------+
+|  1 | kolesnikov |   411 |
+|  2 | medvedeva  |   411 |
++----+------------+-------+
+2 rows in set (0.00 sec)
+
