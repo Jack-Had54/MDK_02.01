@@ -1,0 +1,311 @@
+отчет по работе за 20,03,2025
+
+u18@u18-VirtualBox:~$ docker history ubu1:0.1
+IMAGE          CREATED          CREATED BY                                      SIZE      COMMENT
+d7b601fbeba3   22 minutes ago   /bin/bash                                       97.3MB    установил ip,ping,dns
+a04dc4851cbc   7 weeks ago      /bin/sh -c #(nop)  CMD ["/bin/bash"]            0B        
+<missing>      7 weeks ago      /bin/sh -c #(nop) ADD file:6df775300d76441aa…   78.1MB    
+<missing>      7 weeks ago      /bin/sh -c #(nop)  LABEL org.opencontainers.…   0B        
+<missing>      7 weeks ago      /bin/sh -c #(nop)  LABEL org.opencontainers.…   0B        
+<missing>      7 weeks ago      /bin/sh -c #(nop)  ARG LAUNCHPAD_BUILD_ARCH     0B        
+<missing>      7 weeks ago      /bin/sh -c #(nop)  ARG RELEASE                  0B        
+
+u18@u18-VirtualBox:~$ docker inspect ubu1:0.1
+[
+    {
+        "Id": "sha256:d7b601fbeba33f77d772d5ee5ee44b2610584e8cbb252ff368a2a13ac9995569",
+        "RepoTags": [
+            "ubu1:0.1"
+        ],
+        "RepoDigests": [],
+        "Parent": "sha256:a04dc4851cbcbb42b54d1f52a41f5f9eca6a5fd03748c3f6eb2cbeb238ca99bd",
+        "Comment": "установил ip,ping,dns",
+        "Created": "2025-03-20T05:58:45.40523932Z",
+        "DockerVersion": "28.0.1",
+        "Author": "Jack",
+        "Config": {
+            "Hostname": "08dccb99812a",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": true,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "Tty": true,
+            "OpenStdin": true,
+            "StdinOnce": true,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/bash"
+            ],
+            "Image": "ubuntu",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 175458360,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/2e9e8ef6c631fcc42f4e5fbb0886c5e021f43f7d08389185d6b6ad645f498130/diff",
+                "MergedDir": "/var/lib/docker/overlay2/9a7e142da89d376d515c2a9dcaff5eef25db8ca09b548cdc5b799b97e6689b55/merged",
+                "UpperDir": "/var/lib/docker/overlay2/9a7e142da89d376d515c2a9dcaff5eef25db8ca09b548cdc5b799b97e6689b55/diff",
+                "WorkDir": "/var/lib/docker/overlay2/9a7e142da89d376d515c2a9dcaff5eef25db8ca09b548cdc5b799b97e6689b55/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:4b7c01ed0534d4f9be9cf97d068da1598c6c20b26cb6134fad066defdb6d541d",
+                "sha256:d807ea669e3b86b6f87be4d1c0b898155a1d44471cfee84340a66398f9db3aff"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2025-03-20T12:58:45.971302575+07:00"
+        }
+    }
+]
+u18@u18-VirtualBox:~$ docker history ubu1:0.2
+IMAGE          CREATED          CREATED BY                                      SIZE      COMMENT
+00446822693e   5 minutes ago    /bin/bash                                       100MB     установка mysql-client
+d7b601fbeba3   23 minutes ago   /bin/bash                                       97.3MB    установил ip,ping,dns
+a04dc4851cbc   7 weeks ago      /bin/sh -c #(nop)  CMD ["/bin/bash"]            0B        
+<missing>      7 weeks ago      /bin/sh -c #(nop) ADD file:6df775300d76441aa…   78.1MB    
+<missing>      7 weeks ago      /bin/sh -c #(nop)  LABEL org.opencontainers.…   0B        
+<missing>      7 weeks ago      /bin/sh -c #(nop)  LABEL org.opencontainers.…   0B        
+<missing>      7 weeks ago      /bin/sh -c #(nop)  ARG LAUNCHPAD_BUILD_ARCH     0B        
+<missing>      7 weeks ago      /bin/sh -c #(nop)  ARG RELEASE                  0B        
+u18@u18-VirtualBox:~$ docker inspect ubu1:0.2
+[
+    {
+        "Id": "sha256:00446822693e5083155cbc963ad22ee87646b4edf1ea04bf2f855c8fb093d9f2",
+        "RepoTags": [
+            "ubu1:0.2"
+        ],
+        "RepoDigests": [],
+        "Parent": "sha256:d7b601fbeba33f77d772d5ee5ee44b2610584e8cbb252ff368a2a13ac9995569",
+        "Comment": "установка mysql-client",
+        "Created": "2025-03-20T06:16:46.239020013Z",
+        "DockerVersion": "28.0.1",
+        "Author": "Jack",
+        "Config": {
+            "Hostname": "5501bf855b10",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": true,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "Tty": true,
+            "OpenStdin": true,
+            "StdinOnce": true,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/bash"
+            ],
+            "Image": "ubu1:0.1",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "24.04"
+            }
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 275871394,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/9a7e142da89d376d515c2a9dcaff5eef25db8ca09b548cdc5b799b97e6689b55/diff:/var/lib/docker/overlay2/2e9e8ef6c631fcc42f4e5fbb0886c5e021f43f7d08389185d6b6ad645f498130/diff",
+                "MergedDir": "/var/lib/docker/overlay2/3291e5863c81616b0775476e8936f23648d13265f0723894d352616ee94d5106/merged",
+                "UpperDir": "/var/lib/docker/overlay2/3291e5863c81616b0775476e8936f23648d13265f0723894d352616ee94d5106/diff",
+                "WorkDir": "/var/lib/docker/overlay2/3291e5863c81616b0775476e8936f23648d13265f0723894d352616ee94d5106/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:4b7c01ed0534d4f9be9cf97d068da1598c6c20b26cb6134fad066defdb6d541d",
+                "sha256:d807ea669e3b86b6f87be4d1c0b898155a1d44471cfee84340a66398f9db3aff",
+                "sha256:886a579971adc99c611c6674b4d177b5f41a65d6ebeed43e9e316370b0e8eb14"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2025-03-20T13:16:49.497526616+07:00"
+        }
+    }
+]
+
+u18@u18-VirtualBox:~$ docker start 034ae85e6a02
+034ae85e6a02
+u18@u18-VirtualBox:~$ docker images
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+ubu1         0.2       00446822693e   8 minutes ago    276MB
+ubu1         0.1       d7b601fbeba3   26 minutes ago   175MB
+adminer      latest    b2589814f453   7 days ago       121MB
+postgres     latest    563071385448   3 weeks ago      438MB
+ubuntu       latest    a04dc4851cbc   7 weeks ago      78.1MB
+ubuntu       22.04     a24be041d957   7 weeks ago      77.9MB
+mysql        latest    fa262c3a6564   8 weeks ago      797MB
+u18@u18-VirtualBox:~$ docker run -it ubu1:0.2
+root@0eab53846e9d:/# mysql -h 
+mysql: [ERROR] mysql: option '-h' requires an argument.
+root@0eab53846e9d:/# mysql -h 172.17.0.2 -P 3306 -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 9.2.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| Kolesnikov         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.04 sec)
+
+mysql> 
+
+                   "EndpointID": "41a84cdd8006d737eb7760292dbe7558fa643cc7e8ac0a8fc848dc0080d15183",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": null
+                }
+            }
+        }
+    }
+]
+
+21.03.2025
+
+u18@u18-VirtualBox:~$ docker start 0eab53846e9d
+0eab53846e9d
+u18@u18-VirtualBox:~$ docker ps
+CONTAINER ID   IMAGE      COMMAND                  CREATED        STATUS         PORTS      NAMES
+e1e51fb61ab6   postgres   "docker-entrypoint.s…"   23 hours ago   Up 3 minutes   5432/tcp   compassionate_euclid
+0eab53846e9d   ubu1:0.2   "/bin/bash"              24 hours ago   Up 9 seconds              magical_napier
+u18@u18-VirtualBox:~$ docker exec -it 0eab53846e9d bash
+root@0eab53846e9d:/# ls
+bin  bin.usr-is-merged  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  sbin.usr-is-merged  srv  sys  tmp  usr  var
+root@0eab53846e9d:/# psql -h 172.17.0.2 -U postgres
+Password for user postgres: 
+psql (16.8 (Ubuntu 16.8-0ubuntu0.24.04.1), server 17.4 (Debian 17.4-1.pgdg120+2))
+WARNING: psql major version 16, server major version 17.
+         Some psql features might not work.
+Type "help" for help.
+
+postgres=# 
+postgres=# CREATE DATABASE kolesnikov OWNER postgres
+postgres-# ;
+CREATE DATABASE
+postgres=# \l
+ERROR:  column d.daticulocale does not exist
+LINE 8:   d.daticulocale as "ICU Locale",
+          ^
+HINT:  Perhaps you meant to reference the column "d.datlocale".
+postgres=# \c kolesnikov
+psql (16.8 (Ubuntu 16.8-0ubuntu0.24.04.1), server 17.4 (Debian 17.4-1.pgdg120+2))
+WARNING: psql major version 16, server major version 17.
+         Some psql features might not work.
+You are now connected to database "kolesnikov" as user "postgres".
+kolesnikov=# CREATE TABLE t1 (id SERIAL PRIMARY KEY,name VARCHAR(50) NOT NULL);
+CREATE TABLE
+kolesnikov=# INSERT INTO t1 (id,name) VALUES (1,'andrey');
+INSERT 0 1
+kolesnikov=# select * from t1;
+ id |  name  
+----+--------
+  1 | andrey
+(1 row)
+
+kolesnikov=# 
+
+Работа с Dockerfile
+
+u18@u18-VirtualBox:~/DocFale/DocF1$ nano Dockerfile 
+u18@u18-VirtualBox:~/DocFale/DocF1$ docker build -t testaltdocf:1 ./
+[+] Building 458.8s (12/12) FINISHED                                                                                    docker:default
+ => [internal] load build definition from Dockerfile                                                                              0.5s
+ => => transferring dockerfile: 196B                                                                                              0.0s
+ => [internal] load metadata for docker.io/library/ubuntu:22.04                                                                   0.0s
+ => [internal] load .dockerignore                                                                                                 0.7s
+ => => transferring context: 2B                                                                                                   0.0s
+ => [1/7] FROM docker.io/library/ubuntu:22.04                                                                                     0.7s
+ => [internal] load build context                                                                                                 1.9s
+ => => transferring context: 220B                                                                                                 0.0s
+ => [2/7] RUN apt update -y                                                                                                     255.6s
+ => [3/7] RUN apt upgrade -y                                                                                                    117.8s 
+ => [4/7] RUN apt install iproute2 -y                                                                                            46.9s 
+ => [5/7] RUN apt install iputils-ping -y                                                                                        15.7s 
+ => [6/7] COPY . ./home                                                                                                           3.5s 
+ => [7/7] WORKDIR /home                                                                                                           3.2s 
+ => exporting to image                                                                                                            8.1s 
+ => => exporting layers                                                                                                           7.1s 
+ => => writing image sha256:a255a8162218602c85a3ccd67f3a9fbfc21e996dd0e7eaa940c30ba3256d0a3f                                      0.1s 
+ => => naming to docker.io/library/testaltdocf:1  
+u18@u18-VirtualBox:~/DocFale/DocF1$ cat Dockerfile 
+FROM ubuntu:22.04
+RUN apt update -y
+RUN apt upgrade -y
+RUN apt install iproute2 -y 
+RUN apt install iputils-ping -y
+COPY . ./home
+WORKDIR /home
+CMD ["bash"]
+
+u18@u18-VirtualBox:~$ docker images
+REPOSITORY               TAG       IMAGE ID       CREATED         SIZE
+testaltdocf              1         a255a8162218   2 minutes ago   171MB
+ubu1                     0.2       00446822693e   26 hours ago    276MB
+ubu1                     0.1       d7b601fbeba3   26 hours ago    175MB
+drupal                   latest    20e410d1e2ef   33 hours ago    601MB
+adminer                  latest    d1ce2535a665   3 days ago      121MB
+kalilinux/kali-rolling   latest    1b017b5d9401   5 days ago      121MB
+php                      latest    cd0e124311ea   7 days ago      547MB
+adminer                  <none>    b2589814f453   8 days ago      121MB
+postgres                 latest    563071385448   3 weeks ago     438MB
+mariadb                  latest    a914eff5d2eb   5 weeks ago     336MB
+nginx                    latest    53a18edff809   6 weeks ago     192MB
+python                   latest    e6c8fe2e1108   6 weeks ago     1.02GB
+ubuntu                   latest    a04dc4851cbc   7 weeks ago     78.1MB
+ubuntu                   22.04     a24be041d957   7 weeks ago     77.9MB
+phpmyadmin               latest    052506f2de4d   7 weeks ago     570MB
+httpd                    latest    83d938198316   8 weeks ago     148MB
+mysql                    latest    fa262c3a6564   8 weeks ago     797MB
+redis                    latest    ad4b31aa2de6   2 months ago    117MB
+alt                      latest    f407182509fe   3 months ago    132MB
+openjdk                  latest    71260f256d19   2 years ago     470MB
+u18@u18-VirtualBox:~$ docker run -it testaltdocf:1
+root@82d94e6225ea:/home# ls
+Dockerfile  test
+root@82d94e6225ea:/home# cat test
+пробный текст что бы проверить копирование файлов из родителькой системы
+root@82d94e6225ea:/home# 
