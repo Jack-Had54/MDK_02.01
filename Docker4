@@ -1,0 +1,69 @@
+u18@u18-VirtualBox:~/DocFile/DocF1$ pwd
+/home/u18/DocFile/DocF1
+u18@u18-VirtualBox:~/DocFile/DocF1$ cat Dockerfile 
+FROM ubuntu:22.04
+RUN apt update -y
+RUN apt upgrade -y
+RUN apt install iproute2 -y 
+RUN apt install iputils-ping -y
+COPY . ./home
+WORKDIR /home
+CMD ["bash"]
+u18@u18-VirtualBox:~/DocFile/DocF1$ 
+
+u18@u18-VirtualBox:~/DocFile/DocF2$ pwd
+/home/u18/DocFile/DocF2
+u18@u18-VirtualBox:~/DocFile/DocF2$ cat Dockerfile 
+FROM ubuntu
+COPY . /home
+RUN rm /home/Dockerfile
+WORKDIR /home
+RUN touch 123
+RUN echo "Kali топ система" > 123
+RUN apt update
+RUN apt upgrade -y 
+Run apt install iproute2 -y
+run ip a >> 123
+CMD ["bash"]
+u18@u18-VirtualBox:~/DocFile/DocF2$ 
+
+u18@u18-VirtualBox:~/DocFile/DocF3$ pwd
+/home/u18/DocFile/DocF3
+u18@u18-VirtualBox:~/DocFile/DocF3$ cat Dockerfile 
+FROM python
+COPY . .
+CMD ["python","test.py"]
+u18@u18-VirtualBox:~/DocFile/DocF3$ 
+u18@u18-VirtualBox:~/DocFile$ ./script1 
+[+] Building 11.1s (7/7) FINISHED                                docker:default
+ => [internal] load build definition from Dockerfile                       0.5s
+ => => transferring dockerfile: 83B                                        0.0s
+ => [internal] load metadata for docker.io/library/python:latest           0.0s
+ => [internal] load .dockerignore                                          0.5s
+ => => transferring context: 2B                                            0.0s
+ => [internal] load build context                                          0.5s
+ => => transferring context: 116B                                          0.0s
+ => CACHED [1/2] FROM docker.io/library/python:latest                      0.0s
+ => [2/2] COPY . .                                                         2.3s
+ => exporting to image                                                     2.7s
+ => => exporting layers                                                    1.6s
+ => => writing image sha256:09c5563f962cab7f7fe02b2e2e55f68d2a2a8421905ae  0.1s
+ => => naming to docker.io/library/test:0.2                                0.3s
+Hello world! 0
+Hello world! 1
+Hello world! 2
+Hello world! 3
+Hello world! 4
+Hello world! 5
+Hello world! 6
+Untagged: test:0.2
+Deleted: sha256:09c5563f962cab7f7fe02b2e2e55f68d2a2a8421905ae3181191a9ef077d3dde
+u18@u18-VirtualBox:~/DocFile$ pwd
+/home/u18/DocFile
+u18@u18-VirtualBox:~/DocFile$ cat script1 
+#!/bin/bash
+cp -r /home/u18/Code/* /home/u18/DocFile/DocF3/
+docker build -t test:0.2 /home/u18/DocFile/DocF3
+docker run -it --rm --name test test:0.2
+docker rmi test:0.2
+u18@u18-VirtualBox:~/DocFile$ 
