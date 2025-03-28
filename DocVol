@@ -1,0 +1,99 @@
+u18@u18-VirtualBox:~$ docker volume ls 
+DRIVER    VOLUME NAME
+local     81ee0b5fea52f1e0afcb6c612f4fcf115940bfc10fbdd54a732653476f14d2b5
+local     789d12656409d486d5aeaa8ac9a802f82045577c73df360c8f8a944fea76c373
+local     2711d7a6b49ddf0ed8cbe9aecbbf35c884338876904336dfd0f29d54460e51ea
+local     f8ed9b106071c62a7fb1723f2f455df210e0a5e8bad9752956e50e9555660ade
+local     fc1afd5ab7c156d71fc438138cd3d219c004e74200be0d224e0be97486bbbdcc
+u18@u18-VirtualBox:~$ docker ps -a
+CONTAINER ID   IMAGE          COMMAND                  CREATED       STATUS                      PORTS      NAMES
+e1e51fb61ab6   postgres       "docker-entrypoint.s…"   7 days ago    Exited (255) 24 hours ago   5432/tcp   compassionate_euclid
+0eab53846e9d   ubu1:0.2       "/bin/bash"              7 days ago    Exited (255) 24 hours ago              ubu
+034ae85e6a02   fa262c3a6564   "docker-entrypoint.s…"   2 weeks ago   Exited (0) 7 days ago                  bdmysqql
+u18@u18-VirtualBox:~$ docker ps 
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+u18@u18-VirtualBox:~$ ls
+ Code   DocFile   Docker3   Docker_BD   snap    Документы   Изображения   Общедоступные   Шаблоны
+ DNS    Docker    Docker4   enp0s8      Видео   Загрузки    Музыка       'Рабочий стол'
+u18@u18-VirtualBox:~$ mkdir vol_host
+u18@u18-VirtualBox:~$ docker volume create vol1
+vol1
+u18@u18-VirtualBox:~$ docker images
+REPOSITORY               TAG       IMAGE ID       CREATED        SIZE
+test                     0.1       0161ad6e754a   23 hours ago   171MB
+testaltdocf              1         a255a8162218   6 days ago     171MB
+ubu1                     0.2       00446822693e   7 days ago     276MB
+drupal                   latest    20e410d1e2ef   8 days ago     601MB
+adminer                  latest    d1ce2535a665   10 days ago    121MB
+kalilinux/kali-rolling   latest    1b017b5d9401   12 days ago    121MB
+php                      latest    cd0e124311ea   2 weeks ago    547MB
+adminer                  <none>    b2589814f453   2 weeks ago    121MB
+postgres                 latest    563071385448   4 weeks ago    438MB
+mariadb                  latest    a914eff5d2eb   5 weeks ago    336MB
+nginx                    latest    53a18edff809   7 weeks ago    192MB
+python                   latest    e6c8fe2e1108   7 weeks ago    1.02GB
+ubuntu                   latest    a04dc4851cbc   2 months ago   78.1MB
+phpmyadmin               latest    052506f2de4d   2 months ago   570MB
+httpd                    latest    83d938198316   2 months ago   148MB
+mysql                    latest    fa262c3a6564   2 months ago   797MB
+redis                    latest    ad4b31aa2de6   2 months ago   117MB
+alt                      latest    f407182509fe   3 months ago   132MB
+openjdk                  latest    71260f256d19   2 years ago    470MB
+u18@u18-VirtualBox:~$ docker run --mount typ=volume,source=vol1,target=/home/vol1 --name testvol1 -it ubuntu
+invalid argument "typ=volume,source=vol1,target=/home/vol1" for "--mount" flag: unexpected key 'typ' in 'typ=volume'
+
+Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Run 'docker run --help' for more information
+u18@u18-VirtualBox:~$ docker run --mount type=volume,source=vol1,target=/home/vol1 --name testvol1 -it ubuntu
+root@d05612015b0f:/# cd /home/vol
+bash: cd: /home/vol: No such file or directory
+root@d05612015b0f:/# cd /home/vol/
+bash: cd: /home/vol/: No such file or directory
+root@d05612015b0f:/# ls
+bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@d05612015b0f:/# cd home
+root@d05612015b0f:/home# ls
+ubuntu  vol1
+root@d05612015b0f:/home# cd vol1
+root@d05612015b0f:/home/vol1# ls
+root@d05612015b0f:/home/vol1# touch hello
+root@d05612015b0f:/home/vol1# echo "hello from testvol, how are you?"
+hello from testvol, how are you?
+root@d05612015b0f:/home/vol1# echo "hello from testvol, how are you?" > hello
+root@d05612015b0f:/home/vol1# exit
+exit
+dou18@u18-VirtualBox:~$ docker volume inspect vol1
+[
+    {
+        "CreatedAt": "2025-03-28T12:31:31+07:00",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/vol1/_data",
+        "Name": "vol1",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+u18@u18-VirtualBox:~$ 
+
+
+u18@u18-VirtualBox:~/vol_host$ echo "Hi? its okay. I am host" > 123
+u18@u18-VirtualBox:~/vol_host$ docker run --mount type=volume,source=vol1,target=/home/vol1 --mount type=bind,source=.,target=/home/vol --name testvol -it ubuntu
+root@c7ead963b4c2:/# ls
+bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@c7ead963b4c2:/# cd home
+root@c7ead963b4c2:/home# ls
+ubuntu  vol  vol1
+root@c7ead963b4c2:/home# ls vol
+123
+root@c7ead963b4c2:/home# cd vol
+root@c7ead963b4c2:/home/vol# cat 123
+Hi? its okay. I am host
+root@c7ead963b4c2:/home/vol#    
+root@c7ead963b4c2:/home/vol# cat /home/vol1/hello
+hello from testvol, how are you?
+root@c7ead963b4c2:/home/vol# cat /home/vol1/hello && cat 123
+hello from testvol, how are you?
+Hi? its okay. I am host
+root@c7ead963b4c2:/home/vol# 
