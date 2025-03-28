@@ -67,3 +67,14 @@ docker build -t test:0.2 /home/u18/DocFile/DocF3
 docker run -it --rm --name test test:0.2
 docker rmi test:0.2
 u18@u18-VirtualBox:~/DocFile$ 
+
+
+u18@u18-VirtualBox:~/DocFile/DocF4$ cat Dockerfile && cat test.php 
+FROM php:7.2-apache
+WORKDIR /var/www/html/
+COPY . /var/www/html/
+EXPOSE 80
+<?php 
+echo 'Богиня которая блогословила этот мир'
+?>
+u18@u18-VirtualBox:~/DocFile/DocF4$ 
