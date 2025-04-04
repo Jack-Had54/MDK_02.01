@@ -1,0 +1,821 @@
+отчет за 03.04.2025-04.04.2025
+
+Настройки роутеров смотрящие в локальную сеть
+
+Router#show run
+Building configuration...
+
+Current configuration : 1150 bytes
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+ip dhcp pool vlan2
+ network 192.168.10.0 255.255.255.192
+ default-router 192.168.10.62
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+license udi pid CISCO2911/K9 sn FTX1524HO59-
+!
+!
+spanning-tree mode pvst
+!
+!
+interface GigabitEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1.2
+ encapsulation dot1Q 2
+ ip address 192.168.10.62 255.255.255.192
+!
+interface GigabitEthernet0/2
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/0/0
+ ip address 10.10.10.1 255.255.255.252
+!
+interface GigabitEthernet0/1/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/2/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/3/0
+ no ip address
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip route 0.0.0.0 0.0.0.0 10.10.10.2 
+!
+ip flow-export version 9
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+end
+
+
+Router#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is 10.10.10.2 to network 0.0.0.0
+
+     10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C       10.10.10.0/30 is directly connected, GigabitEthernet0/0/0
+L       10.10.10.1/32 is directly connected, GigabitEthernet0/0/0
+     192.168.10.0/24 is variably subnetted, 2 subnets, 2 masks
+C       192.168.10.0/26 is directly connected, GigabitEthernet0/1.2
+L       192.168.10.62/32 is directly connected, GigabitEthernet0/1.2
+S*   0.0.0.0/0 [1/0] via 10.10.10.2
+
+
+
+Router#show run
+Building configuration...
+
+Current configuration : 1153 bytes
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+ip dhcp pool vlan3
+ network 192.168.10.64 255.255.255.192
+ default-router 192.168.10.126
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+license udi pid CISCO2911/K9 sn FTX152459Q9-
+!
+!
+spanning-tree mode pvst
+!
+!
+interface GigabitEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1.3
+ encapsulation dot1Q 3
+ ip address 192.168.10.126 255.255.255.192
+!
+interface GigabitEthernet0/2
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/0/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/1/0
+ ip address 10.10.10.5 255.255.255.252
+!
+interface GigabitEthernet0/2/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/3/0
+ no ip address
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip route 0.0.0.0 0.0.0.0 10.10.10.6 
+!
+ip flow-export version 9
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+end
+
+
+Router#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is 10.10.10.6 to network 0.0.0.0
+
+     10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C       10.10.10.4/30 is directly connected, GigabitEthernet0/1/0
+L       10.10.10.5/32 is directly connected, GigabitEthernet0/1/0
+     192.168.10.0/24 is variably subnetted, 2 subnets, 2 masks
+C       192.168.10.64/26 is directly connected, GigabitEthernet0/1.3
+L       192.168.10.126/32 is directly connected, GigabitEthernet0/1.3
+S*   0.0.0.0/0 [1/0] via 10.10.10.6
+
+
+Router#show run
+Building configuration...
+
+Current configuration : 1156 bytes
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+ip dhcp pool vlan5
+ network 192.168.10.160 255.255.255.240
+ default-router 192.168.10.174
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+license udi pid CISCO2911/K9 sn FTX1524U1QJ-
+!
+!
+spanning-tree mode pvst
+!
+!
+interface GigabitEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1.5
+ encapsulation dot1Q 5
+ ip address 192.168.10.174 255.255.255.240
+!
+interface GigabitEthernet0/2
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/0/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/1/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/2/0
+ ip address 10.10.10.62 255.255.255.252
+!
+interface GigabitEthernet0/3/0
+ no ip address
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip route 0.0.0.0 0.0.0.0 10.10.10.61 
+!
+ip flow-export version 9
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+end
+
+
+Router#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is 10.10.10.61 to network 0.0.0.0
+
+     10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C       10.10.10.60/30 is directly connected, GigabitEthernet0/2/0
+L       10.10.10.62/32 is directly connected, GigabitEthernet0/2/0
+     192.168.10.0/24 is variably subnetted, 2 subnets, 2 masks
+C       192.168.10.160/28 is directly connected, GigabitEthernet0/1.5
+L       192.168.10.174/32 is directly connected, GigabitEthernet0/1.5
+S*   0.0.0.0/0 [1/0] via 10.10.10.61
+
+
+Router#show run
+Building configuration...
+
+Current configuration : 1156 bytes
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+ip dhcp pool vlan4
+ network 192.168.10.128 255.255.255.224
+ default-router 192.168.10.158
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+license udi pid CISCO2911/K9 sn FTX1524DCJ5-
+!
+!
+spanning-tree mode pvst
+!
+!
+interface GigabitEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1.4
+ encapsulation dot1Q 4
+ ip address 192.168.10.158 255.255.255.224
+!
+interface GigabitEthernet0/2
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface GigabitEthernet0/0/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/1/0
+ ip address 10.10.10.58 255.255.255.252
+!
+interface GigabitEthernet0/2/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/3/0
+ no ip address
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip route 0.0.0.0 0.0.0.0 10.10.10.57 
+!
+ip flow-export version 9
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+end
+
+
+Router#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is 10.10.10.57 to network 0.0.0.0
+
+     10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C       10.10.10.56/30 is directly connected, GigabitEthernet0/1/0
+L       10.10.10.58/32 is directly connected, GigabitEthernet0/1/0
+     192.168.10.0/24 is variably subnetted, 2 subnets, 2 masks
+C       192.168.10.128/27 is directly connected, GigabitEthernet0/1.4
+L       192.168.10.158/32 is directly connected, GigabitEthernet0/1.4
+S*   0.0.0.0/0 [1/0] via 10.10.10.57
+
+
+Настройки роутеров промежуточного звена 
+
+
+Router#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     10.0.0.0/8 is variably subnetted, 8 subnets, 2 masks
+C       10.10.10.0/30 is directly connected, GigabitEthernet0/0/0
+L       10.10.10.2/32 is directly connected, GigabitEthernet0/0/0
+C       10.10.10.4/30 is directly connected, GigabitEthernet0/1/0
+L       10.10.10.6/32 is directly connected, GigabitEthernet0/1/0
+C       10.10.10.8/30 is directly connected, GigabitEthernet0/2/0
+L       10.10.10.9/32 is directly connected, GigabitEthernet0/2/0
+C       10.10.10.12/30 is directly connected, GigabitEthernet0/3/0
+L       10.10.10.13/32 is directly connected, GigabitEthernet0/3/0
+     192.168.10.0/24 is variably subnetted, 4 subnets, 2 masks
+S       192.168.10.0/26 [1/0] via 10.10.10.1
+S       192.168.10.64/26 [1/0] via 10.10.10.5
+S       192.168.10.128/28 [1/0] via 10.10.10.10
+S       192.168.10.160/28 [1/0] via 10.10.10.14
+
+
+Router#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     10.0.0.0/8 is variably subnetted, 4 subnets, 2 masks
+C       10.10.10.8/30 is directly connected, GigabitEthernet0/2/0
+L       10.10.10.10/32 is directly connected, GigabitEthernet0/2/0
+C       10.10.10.20/30 is directly connected, GigabitEthernet0/1/0
+L       10.10.10.21/32 is directly connected, GigabitEthernet0/1/0
+     192.168.10.0/24 is variably subnetted, 2 subnets, 2 masks
+S       192.168.10.64/26 [1/0] via 10.10.10.9
+S       192.168.10.128/28 [1/0] via 10.10.10.22
+
+
+Router#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     10.0.0.0/8 is variably subnetted, 4 subnets, 2 masks
+C       10.10.10.20/30 is directly connected, GigabitEthernet0/1/0
+L       10.10.10.22/32 is directly connected, GigabitEthernet0/1/0
+C       10.10.10.48/30 is directly connected, GigabitEthernet0/2/0
+L       10.10.10.49/32 is directly connected, GigabitEthernet0/2/0
+     192.168.10.0/24 is variably subnetted, 2 subnets, 2 masks
+S       192.168.10.64/26 [1/0] via 10.10.10.21
+S       192.168.10.128/28 [1/0] via 10.10.10.50
+
+
+Router#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     10.0.0.0/8 is variably subnetted, 6 subnets, 2 masks
+C       10.10.10.32/30 is directly connected, GigabitEthernet0/0/0
+L       10.10.10.34/32 is directly connected, GigabitEthernet0/0/0
+C       10.10.10.48/30 is directly connected, GigabitEthernet0/2/0
+L       10.10.10.50/32 is directly connected, GigabitEthernet0/2/0
+C       10.10.10.52/30 is directly connected, GigabitEthernet0/3/0
+L       10.10.10.53/32 is directly connected, GigabitEthernet0/3/0
+     192.168.10.0/24 is variably subnetted, 2 subnets, 2 masks
+S       192.168.10.64/26 [1/0] via 10.10.10.49
+S       192.168.10.128/28 [1/0] via 10.10.10.54
+
+
+Router#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     10.0.0.0/8 is variably subnetted, 8 subnets, 2 masks
+C       10.10.10.40/30 is directly connected, GigabitEthernet0/0/0
+L       10.10.10.42/32 is directly connected, GigabitEthernet0/0/0
+C       10.10.10.52/30 is directly connected, GigabitEthernet0/3/0
+L       10.10.10.54/32 is directly connected, GigabitEthernet0/3/0
+C       10.10.10.56/30 is directly connected, GigabitEthernet0/1/0
+L       10.10.10.57/32 is directly connected, GigabitEthernet0/1/0
+C       10.10.10.60/30 is directly connected, GigabitEthernet0/2/0
+L       10.10.10.61/32 is directly connected, GigabitEthernet0/2/0
+     192.168.10.0/24 is variably subnetted, 4 subnets, 2 masks
+S       192.168.10.0/26 [1/0] via 10.10.10.41
+S       192.168.10.64/26 [1/0] via 10.10.10.53
+S       192.168.10.128/28 [1/0] via 10.10.10.58
+S       192.168.10.160/28 [1/0] via 10.10.10.62
+
+
+Router#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     10.0.0.0/8 is variably subnetted, 4 subnets, 2 masks
+C       10.10.10.24/30 is directly connected, GigabitEthernet0/1/0
+L       10.10.10.26/32 is directly connected, GigabitEthernet0/1/0
+C       10.10.10.40/30 is directly connected, GigabitEthernet0/0/0
+L       10.10.10.41/32 is directly connected, GigabitEthernet0/0/0
+     192.168.10.0/24 is variably subnetted, 2 subnets, 2 masks
+S       192.168.10.0/26 [1/0] via 10.10.10.25
+S       192.168.10.160/28 [1/0] via 10.10.10.42
+
+
+Router#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+     10.0.0.0/8 is variably subnetted, 6 subnets, 2 masks
+C       10.10.10.12/30 is directly connected, GigabitEthernet0/3/0
+L       10.10.10.14/32 is directly connected, GigabitEthernet0/3/0
+C       10.10.10.24/30 is directly connected, GigabitEthernet0/1/0
+L       10.10.10.25/32 is directly connected, GigabitEthernet0/1/0
+C       10.10.10.32/30 is directly connected, GigabitEthernet0/0/0
+L       10.10.10.33/32 is directly connected, GigabitEthernet0/0/0
+     192.168.10.0/24 is variably subnetted, 2 subnets, 2 masks
+S       192.168.10.0/26 [1/0] via 10.10.10.13
+S       192.168.10.160/28 [1/0] via 10.10.10.26
+
+Проверка пингом каждой из сетей и шлюза 
+
+Cisco Packet Tracer PC Command Line 1.0
+C:\>ping 192.168.10.62
+
+Pinging 192.168.10.62 with 32 bytes of data:
+
+Reply from 192.168.10.62: bytes=32 time<1ms TTL=255
+Reply from 192.168.10.62: bytes=32 time<1ms TTL=255
+Reply from 192.168.10.62: bytes=32 time<1ms TTL=255
+Reply from 192.168.10.62: bytes=32 time<1ms TTL=255
+
+Ping statistics for 192.168.10.62:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+C:\>ping 192.168.10.66
+
+Pinging 192.168.10.66 with 32 bytes of data:
+
+Request timed out.
+Reply from 192.168.10.66: bytes=32 time<1ms TTL=125
+Reply from 192.168.10.66: bytes=32 time<1ms TTL=125
+Reply from 192.168.10.66: bytes=32 time=1ms TTL=125
+
+Ping statistics for 192.168.10.66:
+    Packets: Sent = 4, Received = 3, Lost = 1 (25% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 1ms, Average = 0ms
+
+C:\>ping 192.168.10.161
+
+Pinging 192.168.10.161 with 32 bytes of data:
+
+Reply from 192.168.10.161: bytes=32 time<1ms TTL=122
+Reply from 192.168.10.161: bytes=32 time<1ms TTL=122
+Reply from 192.168.10.161: bytes=32 time<1ms TTL=122
+Reply from 192.168.10.161: bytes=32 time<1ms TTL=122
+
+Ping statistics for 192.168.10.161:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+C:\>ping 192.168.10.133
+
+Pinging 192.168.10.133 with 32 bytes of data:
+
+Request timed out.
+Reply from 192.168.10.133: bytes=32 time<1ms TTL=122
+Reply from 192.168.10.133: bytes=32 time<1ms TTL=122
+Reply from 192.168.10.133: bytes=32 time<1ms TTL=122
+
+Ping statistics for 192.168.10.133:
+    Packets: Sent = 4, Received = 3, Lost = 1 (25% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+
+Cisco Packet Tracer PC Command Line 1.0
+C:\>ping 192.168.10.126
+
+Pinging 192.168.10.126 with 32 bytes of data:
+
+Reply from 192.168.10.126: bytes=32 time<1ms TTL=255
+Reply from 192.168.10.126: bytes=32 time<1ms TTL=255
+Reply from 192.168.10.126: bytes=32 time<1ms TTL=255
+Reply from 192.168.10.126: bytes=32 time<1ms TTL=255
+
+Ping statistics for 192.168.10.126:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+C:\>ping 192.168.10.5
+
+Pinging 192.168.10.5 with 32 bytes of data:
+
+Request timed out.
+Reply from 192.168.10.5: bytes=32 time<1ms TTL=125
+Reply from 192.168.10.5: bytes=32 time<1ms TTL=125
+Reply from 192.168.10.5: bytes=32 time<1ms TTL=125
+
+Ping statistics for 192.168.10.5:
+    Packets: Sent = 4, Received = 3, Lost = 1 (25% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+C:\>ping 192.168.10.161
+
+Pinging 192.168.10.161 with 32 bytes of data:
+
+Reply from 192.168.10.161: bytes=32 time<1ms TTL=121
+Reply from 192.168.10.161: bytes=32 time=1ms TTL=121
+Reply from 192.168.10.161: bytes=32 time<1ms TTL=121
+Reply from 192.168.10.161: bytes=32 time<1ms TTL=121
+
+Ping statistics for 192.168.10.161:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 1ms, Average = 0ms
+
+C:\>ping 192.168.10.133
+
+Pinging 192.168.10.133 with 32 bytes of data:
+
+Reply from 192.168.10.133: bytes=32 time<1ms TTL=121
+Reply from 192.168.10.133: bytes=32 time<1ms TTL=121
+Reply from 192.168.10.133: bytes=32 time<1ms TTL=121
+Reply from 192.168.10.133: bytes=32 time<1ms TTL=121
+
+Ping statistics for 192.168.10.133:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+
+Cisco Packet Tracer PC Command Line 1.0
+C:\>ping 192.168.10.174
+
+Pinging 192.168.10.174 with 32 bytes of data:
+
+Reply from 192.168.10.174: bytes=32 time<1ms TTL=255
+Reply from 192.168.10.174: bytes=32 time<1ms TTL=255
+Reply from 192.168.10.174: bytes=32 time<1ms TTL=255
+Reply from 192.168.10.174: bytes=32 time<1ms TTL=255
+
+Ping statistics for 192.168.10.174:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+C:\>ping 192.168.10.5
+
+Pinging 192.168.10.5 with 32 bytes of data:
+
+Reply from 192.168.10.5: bytes=32 time<1ms TTL=122
+Reply from 192.168.10.5: bytes=32 time=1ms TTL=122
+Reply from 192.168.10.5: bytes=32 time<1ms TTL=122
+Reply from 192.168.10.5: bytes=32 time<1ms TTL=122
+
+Ping statistics for 192.168.10.5:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 1ms, Average = 0ms
+
+C:\>ping 192.168.10.67
+
+Pinging 192.168.10.67 with 32 bytes of data:
+
+Reply from 192.168.10.67: bytes=32 time<1ms TTL=122
+Reply from 192.168.10.67: bytes=32 time<1ms TTL=122
+Reply from 192.168.10.67: bytes=32 time<1ms TTL=122
+Reply from 192.168.10.67: bytes=32 time<1ms TTL=122
+
+Ping statistics for 192.168.10.67:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+C:\>ping 192.168.10.133
+
+Pinging 192.168.10.133 with 32 bytes of data:
+
+Reply from 192.168.10.133: bytes=32 time<1ms TTL=125
+Reply from 192.168.10.133: bytes=32 time<1ms TTL=125
+Reply from 192.168.10.133: bytes=32 time<1ms TTL=125
+Reply from 192.168.10.133: bytes=32 time<1ms TTL=125
+
+Ping statistics for 192.168.10.133:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+
+C:\>ping 192.168.10.158
+
+Pinging 192.168.10.158 with 32 bytes of data:
+
+Reply from 192.168.10.158: bytes=32 time<1ms TTL=255
+Reply from 192.168.10.158: bytes=32 time<1ms TTL=255
+Reply from 192.168.10.158: bytes=32 time<1ms TTL=255
+Reply from 192.168.10.158: bytes=32 time<1ms TTL=255
+
+Ping statistics for 192.168.10.158:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+C:\>ping 192.168.10.5
+
+Pinging 192.168.10.5 with 32 bytes of data:
+
+Reply from 192.168.10.5: bytes=32 time<1ms TTL=121
+Reply from 192.168.10.5: bytes=32 time<1ms TTL=121
+Reply from 192.168.10.5: bytes=32 time<1ms TTL=121
+Reply from 192.168.10.5: bytes=32 time<1ms TTL=121
+
+Ping statistics for 192.168.10.5:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+C:\>ping 192.168.10.67
+
+Pinging 192.168.10.67 with 32 bytes of data:
+
+Reply from 192.168.10.67: bytes=32 time<1ms TTL=121
+Reply from 192.168.10.67: bytes=32 time<1ms TTL=121
+Reply from 192.168.10.67: bytes=32 time<1ms TTL=121
+Reply from 192.168.10.67: bytes=32 time=1ms TTL=121
+
+Ping statistics for 192.168.10.67:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 1ms, Average = 0ms
+
+C:\>ping 192.168.10.161
+
+Pinging 192.168.10.161 with 32 bytes of data:
+
+Reply from 192.168.10.161: bytes=32 time<1ms TTL=125
+Reply from 192.168.10.161: bytes=32 time<1ms TTL=125
+Reply from 192.168.10.161: bytes=32 time<1ms TTL=125
+Reply from 192.168.10.161: bytes=32 time<1ms TTL=125
+
+Ping statistics for 192.168.10.161:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
