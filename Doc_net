@@ -1,0 +1,539 @@
+u18@u18-VirtualBox:~$ docker network create -d birdge --subnet 192.168.10.0/26 --gateway 192.168.10.62 Net1
+Error response from daemon: plugin "birdge" not found
+u18@u18-VirtualBox:~$ docker network create -d bridge --subnet 192.168.10.0/26 --gateway 192.168.10.62 Net1
+e7dd56a85be4cf75b21cc7ef7a6cb652551815139311611ba0471e7808908dd1
+u18@u18-VirtualBox:~$ docker network create -d bridge --subnet 192.168.10.64/26 --gateway 192.168.10.126 Net2
+c8c83af72f2e9ed18b783e46d517348cb2cb39d51c1287b6cf76795143cba2fa
+u18@u18-VirtualBox:~$ docker network create -d bridge --subnet 192.168.10.128/27 --gateway 192.168.10.158 Net3
+1a6f1b003bd47e46cc4bdff4299e4088a2ebcfddeb43ccad04ec2843610dac9e
+u18@u18-VirtualBox:~$ docker network create -d bridge --subnet 192.168.10.160/28 --gateway 192.168.10.174 Net4
+1fc15657eed416d4cc60843f6d2dd732b7569cc0866ee5ad587e084b4f18787f
+u18@u18-VirtualBox:~$ docker network inspect Net1
+[
+    {
+        "Name": "Net1",
+        "Id": "e7dd56a85be4cf75b21cc7ef7a6cb652551815139311611ba0471e7808908dd1",
+        "Created": "2025-04-10T12:44:36.419950496+07:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "192.168.10.0/26",
+                    "Gateway": "192.168.10.62"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]
+u18@u18-VirtualBox:~$ docker network inspect Net2
+[
+    {
+        "Name": "Net2",
+        "Id": "c8c83af72f2e9ed18b783e46d517348cb2cb39d51c1287b6cf76795143cba2fa",
+        "Created": "2025-04-10T12:46:14.304338154+07:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "192.168.10.64/26",
+                    "Gateway": "192.168.10.126"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]
+u18@u18-VirtualBox:~$ docker network inspect Net3
+[
+    {
+        "Name": "Net3",
+        "Id": "1a6f1b003bd47e46cc4bdff4299e4088a2ebcfddeb43ccad04ec2843610dac9e",
+        "Created": "2025-04-10T12:47:09.935578449+07:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "192.168.10.128/27",
+                    "Gateway": "192.168.10.158"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]
+u18@u18-VirtualBox:~$ docker network inspect Net4
+[
+    {
+        "Name": "Net4",
+        "Id": "1fc15657eed416d4cc60843f6d2dd732b7569cc0866ee5ad587e084b4f18787f",
+        "Created": "2025-04-10T12:48:03.949423194+07:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "192.168.10.160/28",
+                    "Gateway": "192.168.10.174"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]
+u18@u18-VirtualBox:~$ 
+
+
+u18@u18-VirtualBox:~$ docker ps
+CONTAINER ID   IMAGE     COMMAND     CREATED              STATUS              PORTS     NAMES
+14f9631843ef   alpine    "/bin/sh"   12 seconds ago       Up 7 seconds                  Aaa_4.1
+d5a5911212df   alpine    "/bin/sh"   22 seconds ago       Up 18 seconds                 Aaa_4.2
+1d92423cf5d5   alpine    "/bin/sh"   34 seconds ago       Up 30 seconds                 Aaa_3.2
+ffcaa9018b9c   alpine    "/bin/sh"   43 seconds ago       Up 40 seconds                 Aaa_3.1
+abd19b89fd34   alpine    "/bin/sh"   About a minute ago   Up About a minute             Aaa_2.1
+4f450a841cff   alpine    "/bin/sh"   About a minute ago   Up About a minute             Aaa_2.2
+502d8b4a4e86   alpine    "/bin/sh"   3 minutes ago        Up 3 minutes                  Aaa_1.2
+e053e6e661eb   alpine    "/bin/sh"   3 minutes ago        Up 3 minutes                  Aaa_1.1
+u18@u18-VirtualBox:~$ docker network inspect Net1
+[
+    {
+        "Name": "Net1",
+        "Id": "e7dd56a85be4cf75b21cc7ef7a6cb652551815139311611ba0471e7808908dd1",
+        "Created": "2025-04-10T12:44:36.419950496+07:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "192.168.10.0/26",
+                    "Gateway": "192.168.10.62"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "502d8b4a4e8606e5d25ea0e7ce08ea1057c8ba17185bdb1f472f532bf5d28948": {
+                "Name": "Aaa_1.2",
+                "EndpointID": "b58953fc58f2c6a3feb40cae9f4c74e35ebc64a5e956df6e5086958025a058df",
+                "MacAddress": "12:3d:24:8a:ff:3d",
+                "IPv4Address": "192.168.10.2/26",
+                "IPv6Address": ""
+            },
+            "e053e6e661ebb2079d0578d2681084e3f9fec904268525494c514edcb804a4d3": {
+                "Name": "Aaa_1.1",
+                "EndpointID": "9e6055384296b4a24c8fc6c6335429379794d958a651e9147400a3226a98648a",
+                "MacAddress": "c6:0a:44:fd:9a:a6",
+                "IPv4Address": "192.168.10.1/26",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {}
+    }
+]
+u18@u18-VirtualBox:~$ docker network inspect Net2
+[
+    {
+        "Name": "Net2",
+        "Id": "c8c83af72f2e9ed18b783e46d517348cb2cb39d51c1287b6cf76795143cba2fa",
+        "Created": "2025-04-10T12:46:14.304338154+07:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "192.168.10.64/26",
+                    "Gateway": "192.168.10.126"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "4f450a841cffc4fd1b252cf7a433edf0ed1a0928746c327d140737cb73fa8c59": {
+                "Name": "Aaa_2.2",
+                "EndpointID": "733a6a74ac77ec97487dd5941a2145263f7aa9259aa04c51e397cea9d02cff93",
+                "MacAddress": "5e:4f:a9:61:c8:46",
+                "IPv4Address": "192.168.10.65/26",
+                "IPv6Address": ""
+            },
+            "abd19b89fd34dd84c93979c3c31380e2f615bcd584731940dfb3d43128ad8da2": {
+                "Name": "Aaa_2.1",
+                "EndpointID": "14b516fd1db27f3736b56082db989b209ce7cc5c18a92423fb8fedb265ef02f5",
+                "MacAddress": "6e:e3:0d:f4:7a:a8",
+                "IPv4Address": "192.168.10.66/26",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {}
+    }
+]
+u18@u18-VirtualBox:~$ docker network inspect Net3
+[
+    {
+        "Name": "Net3",
+        "Id": "1a6f1b003bd47e46cc4bdff4299e4088a2ebcfddeb43ccad04ec2843610dac9e",
+        "Created": "2025-04-10T12:47:09.935578449+07:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "192.168.10.128/27",
+                    "Gateway": "192.168.10.158"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "1d92423cf5d57046a2a5b57ab98fe34252b3c911aa5d7b84e3e298ab16ba5d2d": {
+                "Name": "Aaa_3.2",
+                "EndpointID": "ae49df55aff73bc28de2b67e91415417484eae374559b2d4421c263c46b57b38",
+                "MacAddress": "e2:d2:10:fc:25:39",
+                "IPv4Address": "192.168.10.130/27",
+                "IPv6Address": ""
+            },
+            "ffcaa9018b9ceed0d636831950119090d10fe1fab261269235e4e23a15db9f4b": {
+                "Name": "Aaa_3.1",
+                "EndpointID": "41c0b19a8a3b79a46cd4a137d4a82da1c3868ad5f2b0cf062414ae8335e5ff29",
+                "MacAddress": "c6:71:9c:d9:ed:67",
+                "IPv4Address": "192.168.10.129/27",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {}
+    }
+]
+u18@u18-VirtualBox:~$ docker network inspect Net4
+[
+    {
+        "Name": "Net4",
+        "Id": "1fc15657eed416d4cc60843f6d2dd732b7569cc0866ee5ad587e084b4f18787f",
+        "Created": "2025-04-10T12:48:03.949423194+07:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "192.168.10.160/28",
+                    "Gateway": "192.168.10.174"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "14f9631843efba270e9354384025fa92bff91bfdb32891309ce8ec77c4600bac": {
+                "Name": "Aaa_4.1",
+                "EndpointID": "b80de67cfc529ff80257d69ec4297be631d386657ef62511b98d9586e16a5fda",
+                "MacAddress": "3e:c3:84:7b:0c:cd",
+                "IPv4Address": "192.168.10.162/28",
+                "IPv6Address": ""
+            },
+            "d5a5911212df21734100fcc6546a613cd03f66edc1c9287a2896fe4bf40bd746": {
+                "Name": "Aaa_4.2",
+                "EndpointID": "ca9d44a06dcbdcd63e23b9bae6c0210a2017173c7267e6c8363d14c1e4ae616c",
+                "MacAddress": "da:6a:68:a4:2c:fc",
+                "IPv4Address": "192.168.10.161/28",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {}
+    }
+]
+u18@u18-VirtualBox:~$ 
+
+
+u18@u18-VirtualBox:~$ docker exec Aaa_1.1 ping -c 4 192.168.10.126
+PING 192.168.10.126 (192.168.10.126): 56 data bytes
+64 bytes from 192.168.10.126: seq=0 ttl=64 time=0.072 ms
+64 bytes from 192.168.10.126: seq=1 ttl=64 time=0.139 ms
+64 bytes from 192.168.10.126: seq=2 ttl=64 time=0.261 ms
+64 bytes from 192.168.10.126: seq=3 ttl=64 time=0.146 ms
+
+--- 192.168.10.126 ping statistics ---
+4 packets transmitted, 4 packets received, 0% packet loss
+round-trip min/avg/max = 0.072/0.154/0.261 ms
+u18@u18-VirtualBox:~$ docker exec Aaa_1.1 ping -c 4 192.168.10.158
+PING 192.168.10.158 (192.168.10.158): 56 data bytes
+64 bytes from 192.168.10.158: seq=0 ttl=64 time=0.106 ms
+64 bytes from 192.168.10.158: seq=1 ttl=64 time=0.102 ms
+64 bytes from 192.168.10.158: seq=2 ttl=64 time=0.145 ms
+64 bytes from 192.168.10.158: seq=3 ttl=64 time=0.252 ms
+
+--- 192.168.10.158 ping statistics ---
+4 packets transmitted, 4 packets received, 0% packet loss
+round-trip min/avg/max = 0.102/0.151/0.252 ms
+u18@u18-VirtualBox:~$ docker exec Aaa_1.1 ping -c 4 192.168.10.1174
+ping: bad address '192.168.10.1174'
+u18@u18-VirtualBox:~$ docker exec Aaa_1.1 ping -c 4 192.168.10.174
+PING 192.168.10.174 (192.168.10.174): 56 data bytes
+64 bytes from 192.168.10.174: seq=0 ttl=64 time=0.100 ms
+64 bytes from 192.168.10.174: seq=1 ttl=64 time=0.102 ms
+64 bytes from 192.168.10.174: seq=2 ttl=64 time=0.181 ms
+64 bytes from 192.168.10.174: seq=3 ttl=64 time=0.142 ms
+
+--- 192.168.10.174 ping statistics ---
+4 packets transmitted, 4 packets received, 0% packet loss
+round-trip min/avg/max = 0.100/0.131/0.181 ms
+
+
+Мы можем пинговать только машины внутри той сети в которой мы находимся и шлюзы других сетей
+
+
+u18@u18-VirtualBox:~$ docker network ls
+NETWORK ID     NAME      DRIVER    SCOPE
+c36b75c2146c   NEEEt     bridge    local
+e7dd56a85be4   Net1      bridge    local
+c8c83af72f2e   Net2      bridge    local
+1a6f1b003bd4   Net3      bridge    local
+1fc15657eed4   Net4      bridge    local
+922ff34586ba   bridge    bridge    local
+c23bac4bed2e   host      host      local
+54a0ac36ea62   none      null      local
+u18@u18-VirtualBox:~$ docker network connect NEEEt Aaa_1.1
+u18@u18-VirtualBox:~$ docker network connect NEEEt Aaa_2.1
+u18@u18-VirtualBox:~$ docker network connect NEEEt Aaa_3.1
+u18@u18-VirtualBox:~$ docker network connect NEEEt Aaa_4.1
+u18@u18-VirtualBox:~$ docker network inspect NEEEt
+[
+    {
+        "Name": "NEEEt",
+        "Id": "c36b75c2146c2d0593affb5a209f44069a749091bf4236dc584ed71bbabf7c83",
+        "Created": "2025-04-10T13:20:05.988240343+07:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "192.168.11.0/24",
+                    "Gateway": "192.168.11.254"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "14f9631843efba270e9354384025fa92bff91bfdb32891309ce8ec77c4600bac": {
+                "Name": "Aaa_4.1",
+                "EndpointID": "09a31806a149d951c9c43ec03d99779f3cd623e86abfaca1ee50e8aad2f92303",
+                "MacAddress": "5a:08:e2:85:57:4b",
+                "IPv4Address": "192.168.11.5/24",
+                "IPv6Address": ""
+            },
+            "a1efe40af696b0c7c49b5ddde7a00a56174c8059bf02663f0857489ddefd9603": {
+                "Name": "neeet",
+                "EndpointID": "de36bb666eb42fb4556cf22f417a0fd8f77bfa4b9478c6bfdb013acee8e595a6",
+                "MacAddress": "be:51:ba:0f:a6:6d",
+                "IPv4Address": "192.168.11.1/24",
+                "IPv6Address": ""
+            },
+            "abd19b89fd34dd84c93979c3c31380e2f615bcd584731940dfb3d43128ad8da2": {
+                "Name": "Aaa_2.1",
+                "EndpointID": "3c25a4a03345277551c826e24112145115cfe394d0297d6b964304bbab4d04c9",
+                "MacAddress": "62:0e:a6:14:ce:dc",
+                "IPv4Address": "192.168.11.3/24",
+                "IPv6Address": ""
+            },
+            "e053e6e661ebb2079d0578d2681084e3f9fec904268525494c514edcb804a4d3": {
+                "Name": "Aaa_1.1",
+                "EndpointID": "8ade6a0723a8be30f7749b2d5ecd7dd9ad681f1c279e630154a1e1a88dd2ac14",
+                "MacAddress": "6a:53:fb:91:72:fb",
+                "IPv4Address": "192.168.11.2/24",
+                "IPv6Address": ""
+            },
+            "ffcaa9018b9ceed0d636831950119090d10fe1fab261269235e4e23a15db9f4b": {
+                "Name": "Aaa_3.1",
+                "EndpointID": "bf2417c6b397129d11d602c456ff8463f43047c2ad5f43cfc175d20dc3913b66",
+                "MacAddress": "32:bf:05:a0:a9:ff",
+                "IPv4Address": "192.168.11.4/24",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {}
+    }
+]
+u18@u18-VirtualBox:~$ 
+
+u18@u18-VirtualBox:~$ docker exec Aaa_1.1 ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0@if11: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue state UP 
+    link/ether c6:0a:44:fd:9a:a6 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.10.1/26 brd 192.168.10.63 scope global eth0
+       valid_lft forever preferred_lft forever
+3: eth1@if21: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue state UP 
+    link/ether 6a:53:fb:91:72:fb brd ff:ff:ff:ff:ff:ff
+    inet 192.168.11.2/24 brd 192.168.11.255 scope global eth1
+       valid_lft forever preferred_lft forever
+u18@u18-VirtualBox:~$ docker exec neeet ping 192.168.10.1
+PING 192.168.10.1 (192.168.10.1): 56 data bytes
+^Ccontext canceled
+u18@u18-VirtualBox:~$ docker exec neeet ping -c 4 192.168.11.2
+PING 192.168.11.2 (192.168.11.2): 56 data bytes
+64 bytes from 192.168.11.2: seq=0 ttl=64 time=0.111 ms
+64 bytes from 192.168.11.2: seq=1 ttl=64 time=0.127 ms
+64 bytes from 192.168.11.2: seq=2 ttl=64 time=0.156 ms
+64 bytes from 192.168.11.2: seq=3 ttl=64 time=0.202 ms
+
+--- 192.168.11.2 ping statistics ---
+4 packets transmitted, 4 packets received, 0% packet loss
+round-trip min/avg/max = 0.111/0.149/0.202 ms
+u18@u18-VirtualBox:~$ docker exec neeet ping -c 4 192.168.11.3
+PING 192.168.11.3 (192.168.11.3): 56 data bytes
+64 bytes from 192.168.11.3: seq=0 ttl=64 time=0.105 ms
+64 bytes from 192.168.11.3: seq=1 ttl=64 time=0.142 ms
+64 bytes from 192.168.11.3: seq=2 ttl=64 time=0.230 ms
+64 bytes from 192.168.11.3: seq=3 ttl=64 time=0.092 ms
+
+--- 192.168.11.3 ping statistics ---
+4 packets transmitted, 4 packets received, 0% packet loss
+round-trip min/avg/max = 0.092/0.142/0.230 ms
+u18@u18-VirtualBox:~$ docker exec neeet ping -c 4 192.168.11.4
+PING 192.168.11.4 (192.168.11.4): 56 data bytes
+64 bytes from 192.168.11.4: seq=0 ttl=64 time=0.206 ms
+64 bytes from 192.168.11.4: seq=1 ttl=64 time=0.125 ms
+64 bytes from 192.168.11.4: seq=2 ttl=64 time=0.143 ms
+64 bytes from 192.168.11.4: seq=3 ttl=64 time=0.150 ms
+
+--- 192.168.11.4 ping statistics ---
+4 packets transmitted, 4 packets received, 0% packet loss
+round-trip min/avg/max = 0.125/0.156/0.206 ms
+u18@u18-VirtualBox:~$ docker exec neeet ping -c 4 192.168.11.5
+PING 192.168.11.5 (192.168.11.5): 56 data bytes
+64 bytes from 192.168.11.5: seq=0 ttl=64 time=0.125 ms
+64 bytes from 192.168.11.5: seq=1 ttl=64 time=0.167 ms
+64 bytes from 192.168.11.5: seq=2 ttl=64 time=0.127 ms
+64 bytes from 192.168.11.5: seq=3 ttl=64 time=0.156 ms
+
+--- 192.168.11.5 ping statistics ---
+4 packets transmitted, 4 packets received, 0% packet loss
+round-trip min/avg/max = 0.125/0.143/0.167 ms
+u18@u18-VirtualBox:~$ 
+
+u18@u18-VirtualBox:~$ docker run -d --net host --name web httpd
+9259719d4d05ea3b091f2fcd77c7ee8dc86bb4fb1c746f880807dcbdd93468b4
+u18@u18-VirtualBox:~$ docker ps
+CONTAINER ID   IMAGE     COMMAND              CREATED             STATUS             PORTS     NAMES
+9259719d4d05   httpd     "httpd-foreground"   9 seconds ago       Up 5 seconds                 web
+a1efe40af696   alpine    "/bin/sh"            35 minutes ago      Up 35 minutes                neeet
+14f9631843ef   alpine    "/bin/sh"            58 minutes ago      Up 58 minutes                Aaa_4.1
+d5a5911212df   alpine    "/bin/sh"            58 minutes ago      Up 58 minutes                Aaa_4.2
+1d92423cf5d5   alpine    "/bin/sh"            59 minutes ago      Up 58 minutes                Aaa_3.2
+ffcaa9018b9c   alpine    "/bin/sh"            59 minutes ago      Up 59 minutes                Aaa_3.1
+abd19b89fd34   alpine    "/bin/sh"            59 minutes ago      Up 59 minutes                Aaa_2.1
+4f450a841cff   alpine    "/bin/sh"            59 minutes ago      Up 59 minutes                Aaa_2.2
+502d8b4a4e86   alpine    "/bin/sh"            About an hour ago   Up About an hour             Aaa_1.2
+e053e6e661eb   alpine    "/bin/sh"            About an hour ago   Up About an hour             Aaa_1.1
+
+В браузере на по запросу localhost/ выдает на странице надпись "it works"
