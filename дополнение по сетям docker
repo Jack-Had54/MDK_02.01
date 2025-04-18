@@ -1,0 +1,71 @@
+kolea@kolea:~$ docker run -d --net host --name m1sq -e MYSQL_ROOT_PASSWORD=123 mysql 
+362d0e1d926c373c47aaf2ce556fd433641286f30bf95d78af7d266d0b2a6144
+kolea@kolea:~$ docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS     NAMES
+362d0e1d926c   mysql     "docker-entrypoint.s…"   4 seconds ago    Up 4 seconds              m1sq
+873e46102db6   nginx     "/docker-entrypoint.…"   26 minutes ago   Up 26 minutes             apa
+kolea@kolea:~$ docker rm msq
+msq
+kolea@kolea:~$ docker network inspect host
+[
+    {
+        "Name": "host",
+        "Id": "e1bf40b75e7112f2b2b7582a5793e78b1da1c40a98127a3e50bcb8d450317cbd",
+        "Created": "2025-04-18T06:23:10.712283743Z",
+        "Scope": "local",
+        "Driver": "host",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": null
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "362d0e1d926c373c47aaf2ce556fd433641286f30bf95d78af7d266d0b2a6144": {
+                "Name": "m1sq",
+                "EndpointID": "2cca645419a458a228e2cb999c18df0d62ded048162c463e3eda411448cd6973",
+                "MacAddress": "",
+                "IPv4Address": "",
+                "IPv6Address": ""
+            },
+            "873e46102db6bfabc7c883aa5494aa3d0157d75a901e29b925adeadc755515a7": {
+                "Name": "apa",
+                "EndpointID": "e844ae655a82fe31c3cf90ccef6ba91c2e52620f7c5d7527cf4ec2493c1df46e",
+                "MacAddress": "",
+                "IPv4Address": "",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {}
+    }
+]
+kolea@kolea:~$ 
+
+Создал два кониейнера на сервере, один веб, второй база mysql
+к обиим контейнерам я помгу подключиться 
+
+u18@u18-VirtualBox:~$ mysql -h 192.168.1.23 -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 9.3.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> 
+
