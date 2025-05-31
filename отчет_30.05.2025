@@ -1,0 +1,224 @@
+Работа с сервером samba
+Создание  нескольких дерикторий с различными пользователями и группами
+
+Подключаюсь по ssh к серверу и перемещаюсь в /media/RAID/Shared
+Проверяю что все созданныие осталось 
+
+user@user:/media/RAID$ cd Shared
+user@user:/media/RAID/Shared$ ls
+test
+user@user:/media/RAID/Shared$ cd test
+user@user:/media/RAID/Shared/test$ ls
+123.txt  test.txt
+user@user:/media/RAID/Shared/test$ cd ~
+
+После возрощения в деректорию home создаем нового пользователя и группу
+
+user@user:~$ sudo groupadd Buhs
+[sudo] password for user: 
+user@user:~$ nano /etc/group
+user@user:~$ sudo useradd -G Buhs buhs_1
+user@user:~$ sudo passwd buhs_1
+New password: 
+Retype new password: 
+passwd: password updated successfully
+
+В деректории /media/RAID создаем новые дериктории, который мы добавим в samba для расшаривания
+У некоторых деректорий меняем владельца и группу, а так же, прова для изменения ӕтих дерикторий 
+
+user@user:~$ cd /media
+user@user:/media$ ls
+123  RAID  RAID_10
+user@user:/media$ cd RAID
+user@user:/media/RAID$ ls
+123  docker  etc  lost+found  Shared  ttt
+user@user:/media/RAID$ mkdir Shared_stud Shared_Buhs Shared_bush_1 Shared_all
+user@user:/media/RAID$ ls -l
+total 48
+-rw-rw-r--   1 user user    86 мая 22 04:46 123
+drwx--x---  12 root root  4096 мая 29 03:08 docker
+drwxr-xr-x 110 user user  4096 мая 22 05:08 etc
+drwx------   2 root root 16384 мая 22 04:39 lost+found
+drwxrwxr-x   3 user user  4096 мая 30 03:08 Shared
+drwxrwxr-x   2 user user  4096 мая 30 06:26 Shared_all
+drwxrwxr-x   2 user user  4096 мая 30 06:26 Shared_Buhs
+drwxrwxr-x   2 user user  4096 мая 30 06:26 Shared_bush_1
+drwxrwxr-x   2 user user  4096 мая 30 06:26 Shared_stud
+-rw-r--r--   1 root root     0 мая 29 02:45 ttt
+user@user:/media/RAID$ sudo chown buhs_1 Shared_bush_1
+user@user:/media/RAID$ sudo chown buhs_1:Buhs Shared_Buhs
+user@user:/media/RAID$ sudo chmod 777 Shared_all
+user@user:/media/RAID$ ls -l
+total 48
+-rw-rw-r--   1 user   user    86 мая 22 04:46 123
+drwx--x---  12 root   root  4096 мая 29 03:08 docker
+drwxr-xr-x 110 user   user  4096 мая 22 05:08 etc
+drwx------   2 root   root 16384 мая 22 04:39 lost+found
+drwxrwxr-x   3 user   user  4096 мая 30 03:08 Shared
+drwxrwxrwx   2 user   user  4096 мая 30 06:26 Shared_all
+drwxrwxr-x   2 buhs_1 Buhs  4096 мая 30 06:26 Shared_Buhs
+drwxrwxr-x   2 buhs_1 user  4096 мая 30 06:26 Shared_bush_1
+drwxrwxr-x   2 user   user  4096 мая 30 06:26 Shared_stud
+-rw-r--r--   1 root   root     0 мая 29 02:45 ttt
+
+Смотрим информацию по каждой новой группе
+
+user@user:/media/RAID$ stat Shared_stud
+  File: Shared_stud
+  Size: 4096            Blocks: 8          IO Block: 4096   directory
+Device: 259,1   Inode: 132797      Links: 2
+Access: (0775/drwxrwxr-x)  Uid: ( 1000/    user)   Gid: ( 1000/    user)
+Access: 2025-05-30 06:26:30.260737689 +0000
+Modify: 2025-05-30 06:26:30.260737689 +0000
+Change: 2025-05-30 06:26:30.260737689 +0000
+ Birth: 2025-05-30 06:26:30.260737689 +0000
+user@user:/media/RAID$ stat Shared_bush_1
+  File: Shared_bush_1
+  Size: 4096            Blocks: 8          IO Block: 4096   directory
+Device: 259,1   Inode: 132799      Links: 2
+Access: (0775/drwxrwxr-x)  Uid: ( 1001/  buhs_1)   Gid: ( 1000/    user)
+Access: 2025-05-30 06:26:30.260737689 +0000
+Modify: 2025-05-30 06:26:30.260737689 +0000
+Change: 2025-05-30 06:28:47.251078152 +0000
+ Birth: 2025-05-30 06:26:30.260737689 +0000
+user@user:/media/RAID$ stat Shared_all
+  File: Shared_all
+  Size: 4096            Blocks: 8          IO Block: 4096   directory
+Device: 259,1   Inode: 132800      Links: 2
+Access: (0777/drwxrwxrwx)  Uid: ( 1000/    user)   Gid: ( 1000/    user)
+Access: 2025-05-30 06:26:30.260737689 +0000
+Modify: 2025-05-30 06:26:30.260737689 +0000
+Change: 2025-05-30 06:30:56.317238993 +0000
+ Birth: 2025-05-30 06:26:30.260737689 +0000
+
+Меняем конфигурацию samba 
+Внос/ следующие изминения
+{
+	[Shared_stud]
+
+        path = /media/RAID/Shared_stud
+        writable = yes
+        write list = user,buhs_1,@Buhs
+        
+        [Shared_buhs_1]
+
+        path = /media/RAID/Shared_buhs_1
+        writable = yes
+        inherit owner = yes
+        inherit permissions = yes
+        write list = user,buhs_1
+
+        [Shared_Buhs]
+
+        path = /media/RAID/Shared_Buhs
+        writable = yes
+        force user = buhs_1
+        force group = Buhs
+        create mask = 0666
+        directory mask =0777
+        write list = user
+
+        [Shared_all]
+
+        path = /media/RAID/Shared_all
+        writable = yes
+        guest ok = yes
+}
+После чего перезагружаем samba
+
+user@user:/media/RAID$ sudo nano /etc/samba/smb.conf
+user@user:/media/RAID$ mv Shared_bush_1 Shared_buhs_1
+user@user:/media/RAID$ ls -l
+total 48
+-rw-rw-r--   1 user   user    86 мая 22 04:46 123
+drwx--x---  12 root   root  4096 мая 29 03:08 docker
+drwxr-xr-x 110 user   user  4096 мая 22 05:08 etc
+drwx------   2 root   root 16384 мая 22 04:39 lost+found
+drwxrwxr-x   3 user   user  4096 мая 30 03:08 Shared
+drwxrwxrwx   2 user   user  4096 мая 30 06:26 Shared_all
+drwxrwxr-x   2 buhs_1 Buhs  4096 мая 30 06:26 Shared_Buhs
+drwxrwxr-x   2 buhs_1 user  4096 мая 30 06:26 Shared_buhs_1
+drwxrwxr-x   2 user   user  4096 мая 30 06:26 Shared_stud
+-rw-r--r--   1 root   root     0 мая 29 02:45 ttt
+user@user:/media/RAID$ sudo testparm
+Load smb config files from /etc/samba/smb.conf
+Loaded services file OK.
+Weak crypto is allowed by GnuTLS (e.g. NTLM as a compatibility fallback)
+
+Server role: ROLE_STANDALONE
+
+Press enter to see a dump of your service definitions
+^C
+user@user:/media/RAID$ sudo service smbd restart
+
+После перезагруски серва samba мы заходим с декстопа и через файловую систему подключаемся к серверу
+Там мы в каждой из дерикторий создаем по папке и несколько файлов, и с через терминал смотрим что у нас получилось  
+
+user@user:/media/RAID$ ls
+123  docker  etc  lost+found  Shared  Shared_all  Shared_Buhs  Shared_buhs_1  Shared_stud  ttt
+user@user:/media/RAID$ ls -l
+total 48
+-rw-rw-r--   1 user   user    86 мая 22 04:46 123
+drwx--x---  12 root   root  4096 мая 29 03:08 docker
+drwxr-xr-x 110 user   user  4096 мая 22 05:08 etc
+drwx------   2 root   root 16384 мая 22 04:39 lost+found
+drwxrwxr-x   3 user   user  4096 мая 30 03:08 Shared
+drwxrwxrwx   2 user   user  4096 мая 30 06:26 Shared_all
+drwxrwxr-x   2 buhs_1 Buhs  4096 мая 30 07:02 Shared_Buhs
+drwxrwxr-x   2 buhs_1 user  4096 мая 30 07:01 Shared_buhs_1
+drwxrwxr-x   3 user   user  4096 мая 30 06:57 Shared_stud
+-rw-r--r--   1 root   root     0 мая 29 02:45 ttt
+user@user:/media/RAID$ ls Shared_stud
+dir
+user@user:/media/RAID$ stat Shared_stud/dir
+  File: Shared_stud/dir
+  Size: 4096            Blocks: 8          IO Block: 4096   directory
+Device: 259,1   Inode: 132801      Links: 2
+Access: (0755/drwxr-xr-x)  Uid: ( 1000/    user)   Gid: ( 1000/    user)
+Access: 2025-05-30 06:59:22.264726749 +0000
+Modify: 2025-05-30 06:59:17.154585680 +0000
+Change: 2025-05-30 06:59:17.154585680 +0000
+ Birth: 2025-05-30 06:57:21.836688632 +0000
+user@user:/media/RAID$ ls -l Shared_stud/dir
+total 4
+-rwxr--r-- 1 user user 135 мая 30 06:59 test.txt
+user@user:/media/RAID$ stat Shared_stud/dir/test.txt
+  File: Shared_stud/dir/test.txt
+  Size: 135             Blocks: 8          IO Block: 4096   regular file
+Device: 259,1   Inode: 132802      Links: 1
+Access: (0744/-rwxr--r--)  Uid: ( 1000/    user)   Gid: ( 1000/    user)
+Access: 2025-05-30 06:59:17.154585680 +0000
+Modify: 2025-05-30 06:59:17.158457310 +0000
+Change: 2025-05-30 06:59:17.157584589 +0000
+ Birth: 2025-05-30 06:59:17.154585680 +0000
+user@user:/media/RAID$ ls Shared_buhs_1
+hghgh.txt
+user@user:/media/RAID$ stat Shared_buhs_1/hghgh.txt 
+  File: Shared_buhs_1/hghgh.txt
+  Size: 15              Blocks: 8          IO Block: 4096   regular file
+Device: 259,1   Inode: 132803      Links: 1
+Access: (0764/-rwxrw-r--)  Uid: ( 1001/  buhs_1)   Gid: ( 1000/    user)
+Access: 2025-05-30 07:01:52.235564315 +0000
+Modify: 2025-05-30 07:01:52.240484119 +0000
+Change: 2025-05-30 07:01:52.239569067 +0000
+ Birth: 2025-05-30 07:01:52.235564315 +0000
+user@user:/media/RAID$ stat Shared_Buhs/aaaaaa.txt 
+  File: Shared_Buhs/aaaaaa.txt
+  Size: 27              Blocks: 8          IO Block: 4096   regular file
+Device: 259,1   Inode: 132804      Links: 1
+Access: (0664/-rw-rw-r--)  Uid: ( 1001/  buhs_1)   Gid: ( 1001/    Buhs)
+Access: 2025-05-30 07:02:40.743165450 +0000
+Modify: 2025-05-30 07:02:40.747483819 +0000
+Change: 2025-05-30 07:02:40.747167574 +0000
+ Birth: 2025-05-30 07:02:40.743165450 +0000
+user@user:/media/RAID$ stat Shared_Buhs/test_dir
+  File: Shared_Buhs/test_dir
+  Size: 4096            Blocks: 8          IO Block: 4096   directory
+Device: 259,1   Inode: 132805      Links: 2
+Access: (0775/drwxrwxr-x)  Uid: ( 1001/  buhs_1)   Gid: ( 1001/    Buhs)
+Access: 2025-05-30 07:07:16.981899233 +0000
+Modify: 2025-05-30 07:07:16.981899233 +0000
+Change: 2025-05-30 07:07:16.981899233 +0000
+ Birth: 2025-05-30 07:07:16.981899233 +0000
+user@user:/media/RAID$ umask
+0002
